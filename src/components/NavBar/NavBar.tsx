@@ -10,7 +10,7 @@ const NavBar = (): JSX.Element => {
       sticky='top'
       className='border border-primary'>
       <Container>
-        <Navbar.Brand href='#' className='border border-secondary'>
+        <Navbar.Brand href='/' className='border border-secondary'>
           RadCalc
         </Navbar.Brand>
         <Navbar.Toggle
