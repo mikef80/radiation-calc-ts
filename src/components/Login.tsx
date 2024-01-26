@@ -7,8 +7,7 @@ const Login = (): JSX.Element => {
   const onFormSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     console.log(e);
-    console.log('login submission');
-    
+    console.log("login submission");
   };
 
   return (

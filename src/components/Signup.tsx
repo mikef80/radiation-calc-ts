@@ -7,8 +7,7 @@ const Signup = (): JSX.Element => {
   const onFormSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     console.log(e);
-    console.log('signup submission');
-    
+    console.log("signup submission");
   };
 
   return (
