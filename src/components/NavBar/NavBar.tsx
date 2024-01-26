@@ -19,10 +19,10 @@ const NavBar = (): JSX.Element => {
         />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
-            <LinkContainer to='login'>
+            <LinkContainer to='/login'>
               <Nav.Link>Login</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='signup'>
+            <LinkContainer to='/signup'>
               <Nav.Link>Signup</Nav.Link>
             </LinkContainer>
           </Nav>
