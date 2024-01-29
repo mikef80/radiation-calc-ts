@@ -1,13 +1,25 @@
 import { Button, Form } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 
 const Signup = (): JSX.Element => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const onFormSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log(e);
-    console.log("signup submission");
+    const newUser = {
+      firstName,
+      lastName,
+      emailAddress,
+      password,
+      confirmPassword,
+    };
+    console.log(newUser);
   };
 
   return (
@@ -17,23 +29,48 @@ const Signup = (): JSX.Element => {
           <h3 className='text-center'>Sign Up</h3>
           <Form.Group className='mb-3' controlId='formBasicFirstName'>
             <Form.Label>First Name:</Form.Label>
-            <Form.Control type='text' placeholder='Enter First Name' />
+            <Form.Control
+              type='text'
+              placeholder='Enter First Name'
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicLastName'>
             <Form.Label>Last Name:</Form.Label>
-            <Form.Control type='text' placeholder='Enter Last Name' />
+            <Form.Control
+              type='text'
+              placeholder='Enter Last Name'
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Label>Email address:</Form.Label>
-            <Form.Control type='email' placeholder='Enter email' />
+            <Form.Control
+              type='email'
+              placeholder='Enter email'
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
+            />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
             <Form.Label>Password:</Form.Label>
-            <Form.Control type='password' placeholder='Password' />
+            <Form.Control
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPasswordConfirm'>
             <Form.Label>Confirm Password:</Form.Label>
-            <Form.Control type='password' placeholder='Password' />
+            <Form.Control
+              type='password'
+              placeholder='Password'
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
           </Form.Group>
 
           <Button variant='primary' type='submit'>

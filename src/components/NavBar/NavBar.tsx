@@ -1,5 +1,6 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import logo from "../../logos/logo";
 
 const NavBar = (): JSX.Element => {
   return (
@@ -11,6 +12,7 @@ const NavBar = (): JSX.Element => {
       className='border border-primary'>
       <Container>
         <Navbar.Brand href='/' className='border border-secondary'>
+          {/* {logo()} */}
           RadCalc
         </Navbar.Brand>
         <Navbar.Toggle
