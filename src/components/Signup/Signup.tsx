@@ -19,7 +19,7 @@ const Signup = (): JSX.Element => {
       lastname,
       email,
       password,
-      confirmPassword,
+      // confirmPassword,
     });
 
     const response = await fetch("http://localhost:9090/api/auth/signup", {
