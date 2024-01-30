@@ -4,22 +4,34 @@ import { Nav } from "react-bootstrap";
 import { SyntheticEvent, useState } from "react";
 
 const Login = (): JSX.Element => {
-  const [emailAddress, setEmailAddress] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(true);
 
-  const onFormSubmit = (e: SyntheticEvent) => {
+  const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const loginUser = {
-      emailAddress,
+    const loginUser = JSON.stringify({
+      email,
       password,
-      rememberMe
+    });
+
+    const response = await fetch("http://localhost:9090/api/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: loginUser,
+    });
+
+    const { msg } = await response.json();
+
+    if (msg === "Invalid password") {
+      setPassword("");
     }
-    
-    console.log(loginUser);
+
+    console.log(msg, "<-- msg");
   };
-
-
 
   return (
     <div className='login template d-flex justify-content-center align-items-center w-100 h-100 bg-dark'>
@@ -31,8 +43,8 @@ const Login = (): JSX.Element => {
             <Form.Control
               type='email'
               placeholder='Enter email'
-              value={emailAddress}
-              onChange={(e) => setEmailAddress(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
@@ -68,7 +80,6 @@ const Login = (): JSX.Element => {
               </Form.Text>
             </small>
           </Form.Group>
-          
         </Form>
       </div>
     </div>

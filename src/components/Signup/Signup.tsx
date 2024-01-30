@@ -2,24 +2,47 @@ import { Button, Form } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 import { SyntheticEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = (): JSX.Element => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
-  const onFormSubmit = (e: SyntheticEvent) => {
+  const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const newUser = {
-      firstName,
-      lastName,
-      emailAddress,
+    const newUser = JSON.stringify({
+      firstname,
+      lastname,
+      email,
       password,
       confirmPassword,
-    };
-    console.log(newUser);
+    });
+
+    const response = await fetch("http://localhost:9090/api/auth/signup", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: newUser,
+    });
+
+    if (response.ok) {
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      navigate("/login");
+    }
+
+    const returnedUser = await response.json();
+
+    console.log(returnedUser, "<-- returnedUser");
   };
 
   return (
@@ -32,8 +55,8 @@ const Signup = (): JSX.Element => {
             <Form.Control
               type='text'
               placeholder='Enter First Name'
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={firstname}
+              onChange={(e) => setFirstname(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicLastName'>
@@ -41,8 +64,8 @@ const Signup = (): JSX.Element => {
             <Form.Control
               type='text'
               placeholder='Enter Last Name'
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={lastname}
+              onChange={(e) => setLastname(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
@@ -50,8 +73,8 @@ const Signup = (): JSX.Element => {
             <Form.Control
               type='email'
               placeholder='Enter email'
-              value={emailAddress}
-              onChange={(e) => setEmailAddress(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
