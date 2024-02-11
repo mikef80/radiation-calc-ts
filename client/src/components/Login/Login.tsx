@@ -24,13 +24,14 @@ const Login = (): JSX.Element => {
       body: loginUser,
     });
 
-    const { msg } = await response.json();
+    const { msg,token } = await response.json();
 
     if (msg === "Invalid password") {
       setPassword("");
     }
 
     console.log(msg, "<-- msg");
+    console.log(token, "<-- token");
   };
 
   return (
