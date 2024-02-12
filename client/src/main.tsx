@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Login from "./components/Login.tsx";
-import Signup from "./components/Signup.tsx";
-import Root from "./components/Root.tsx";
-import Error from "./components/Error.tsx";
+import Login from "./components/Login/Login.tsx";
+import Signup from "./components/Signup/Signup.tsx";
+import Root from "./components/Root/Root.tsx";
+import Error from "./components/Error/Error.tsx";
 
 const router = createBrowserRouter([
   {

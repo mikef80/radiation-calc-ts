@@ -1,5 +1,6 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import logo from "../../logos/logo";
 
 const NavBar = (): JSX.Element => {
   return (
@@ -10,7 +11,8 @@ const NavBar = (): JSX.Element => {
       sticky='top'
       className='border border-primary'>
       <Container>
-        <Navbar.Brand href='#' className='border border-secondary'>
+        <Navbar.Brand href='/' className='border border-secondary'>
+          {/* {logo()} */}
           RadCalc
         </Navbar.Brand>
         <Navbar.Toggle
@@ -19,10 +21,10 @@ const NavBar = (): JSX.Element => {
         />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
-            <LinkContainer to='login'>
+            <LinkContainer to='/login'>
               <Nav.Link>Login</Nav.Link>
             </LinkContainer>
-            <LinkContainer to='signup'>
+            <LinkContainer to='/signup'>
               <Nav.Link>Signup</Nav.Link>
             </LinkContainer>
           </Nav>
