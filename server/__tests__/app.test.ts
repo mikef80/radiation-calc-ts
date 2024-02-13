@@ -28,5 +28,86 @@ describe("/api/register", () => {
           expect(body.message).toBe("The registration was successful");
         });
     });
+
+    it("POST:400 returns an error if user email already exists in the database", () => {
+      return request(testApp)
+        .post("/api/register")
+        .send({
+          firstname: "Dave",
+          lastname: "Davidson",
+          email: "dave@davidson.com",
+          password: "123456789",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body: { errors } }) => {
+          expect(errors[0].msg).toBe("Email already exists.");
+        });
+    });
+
+    it("POST:400 returns an error if register function not provided with a password", () => {
+      return request(testApp)
+        .post("/api/register")
+        .send({
+          firstname: "Bob",
+          lastname: "Bixby",
+          email: "bob@bixby.com",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body: { errors } }) => {
+          expect(errors[0].msg).toBe("Password has to be between 6 and 15 characters.");
+        });
+    });
+
+    it("POST:400 returns an error if register function not provided with a firstname", () => {
+      return request(testApp)
+        .post("/api/register")
+        .send({
+          lastname: "Bixby",
+          email: "bob@bixby.com",
+          password: "123456789",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body: { errors } }) => {
+          expect(errors[0].msg).toBe("Please provide a firstname.");
+        });
+    });
+
+    it("POST:400 returns an error if register function not provided with a lastname", () => {
+      return request(testApp)
+        .post("/api/register")
+        .send({
+          firstname: "Bob",
+          email: "bob@bixby.com",
+          password: "123456789",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body: { errors } }) => {
+          expect(errors[0].msg).toBe("Please provide a lastname.");
+        });
+    });
+
+    it("POST:400 returns an error if register function not provided with an email", () => {
+      return request(testApp)
+        .post("/api/register")
+        .send({
+          firstname: "Bob",
+          lastname: "Bixby",
+          password: "123456789",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body: { errors } }) => {
+          expect(errors[0].msg).toBe("Please provide a valid email.");
+        });
+    });
   });
 });
