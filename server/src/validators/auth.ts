@@ -53,3 +53,5 @@ module.exports = {
   registerValidation: [email, password, emailExists, firstname, lastname],
   loginValidation: [loginFieldsCheck],
 };
+
+// test
