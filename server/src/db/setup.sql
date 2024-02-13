@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS radcalc_test;
+DROP DATABASE IF EXISTS radcalc;
+
+CREATE DATABASE radcalc_test;
+CREATE DATABASE radcalc;

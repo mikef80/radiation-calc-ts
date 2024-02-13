@@ -1,5 +1,6 @@
-const { config } = require("dotenv");
+/* const { config } = require("dotenv");
 config();
+// require("dotenv").config();
 
 module.exports = {
   PORT: process.env.PORT,
@@ -7,3 +8,4 @@ module.exports = {
   CLIENT_URL: process.env.CLIENT_URL,
   SECRET: process.env.SECRET,
 };
+ */
