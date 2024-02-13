@@ -5,11 +5,13 @@ const seed = ({ userData }) => {
   return db
     .query(`DROP TABLE IF EXISTS users`)
     .then(() => {
-      const usersTablePromise = db.query(`CREATE TABLE users (
-      firstname VARCHAR NOT NULL,
-      lastname VARCHAR NOT NULL,
-      email VARCHAR PRIMARY KEY,
-      password VARCHAR NOT NULL
+      const usersTablePromise = db.query(`
+      CREATE TABLE users (
+        user_id SERIAL NOT NULL,
+        firstname VARCHAR NOT NULL,
+        lastname VARCHAR NOT NULL,
+        email VARCHAR PRIMARY KEY,
+        password VARCHAR NOT NULL
     )`);
 
       return Promise.all([usersTablePromise]);
