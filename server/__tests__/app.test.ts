@@ -111,3 +111,19 @@ describe("/api/register", () => {
     });
   });
 });
+
+describe.only("/api/login", () => {
+  describe("POST", () => {
+    it("POST:200 returns an object on login", () => {
+      return request(testApp)
+        .post("/api/login")
+        .send({ email: "dave@davidson.com", password: "123456789" })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.success).toBe(true);
+        });
+    });
+  });
+});

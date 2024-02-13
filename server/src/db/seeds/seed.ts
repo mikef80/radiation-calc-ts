@@ -1,5 +1,6 @@
 const format = require("pg-format");
 const db = require("../index.ts");
+const { hash } = require("bcryptjs");
 
 const seed = ({ userData }) => {
   return db
@@ -17,14 +18,13 @@ const seed = ({ userData }) => {
       return Promise.all([usersTablePromise]);
     })
     .then(() => {
+      const mappedData = userData.map(({ firstname, lastname, email, password }) => {
+        return [firstname, lastname, email, password];
+      });
+
       const insertUsersQueryStr = format(
         "INSERT INTO users (firstname, lastname, email, password) VALUES %L;",
-        userData.map(({ firstname, lastname, email, password }) => [
-          firstname,
-          lastname,
-          email,
-          password,
-        ])
+        mappedData
       );
       const usersPromise = db.query(insertUsersQueryStr);
 

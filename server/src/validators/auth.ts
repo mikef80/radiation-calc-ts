@@ -34,12 +34,14 @@ const emailExists = check("email").custom(async (email: Text) => {
 const loginFieldsCheck = check("email").custom(
   async (value: Text, { req }: { req: Request }) => {
     const user = await db.query("select * from users where email = $1", [value]);
+    console.log(user.rows[0]);
 
     if (!user.rows.length) {
       throw new Error("Email does not exist.");
     }
 
     const validPassword = await compare(req.body.password, user.rows[0].password);
+    console.log(validPassword);
 
     if (!validPassword) {
       throw new Error("Wrong password.");

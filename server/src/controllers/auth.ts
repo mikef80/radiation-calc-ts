@@ -12,11 +12,13 @@ exports.register = async (req: Request, res: Response) => {
       [firstname, lastname, email, hashedPassword]
     );
 
-    return res
-      .status(201)
-      .send({ success: true, message: "The registration was successful" });
+    return res.status(201).send({ success: true, message: "The registration was successful" });
   } catch (error: any) {
     console.log(error.message);
     res.send(500).send({ error: error.message });
   }
+};
+
+exports.login = () => {
+  console.log("here");
 };
