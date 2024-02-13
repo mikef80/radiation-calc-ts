@@ -1,8 +1,6 @@
 const format = require("pg-format");
 const db = require("../index.ts");
 
-// type User = { firstname: String; lastname: String; email: String; password: String };
-
 const seed = ({ userData }) => {
   return db
     .query(`DROP TABLE IF EXISTS users`)
