@@ -3,7 +3,7 @@ const db = require("../index.ts");
 
 // type User = { firstname: String; lastname: String; email: String; password: String };
 
-const seed = ({ userData }: { userData: any }) => {
+const seed = ({ userData }) => {
   return db
     .query(`DROP TABLE IF EXISTS users`)
     .then(() => {
@@ -19,19 +19,12 @@ const seed = ({ userData }: { userData: any }) => {
     .then(() => {
       const insertUsersQueryStr = format(
         "INSERT INTO users (firstname, lastname, email, password) VALUES %L;",
-        userData.map(
-          ({
-            firstname,
-            lastname,
-            email,
-            password,
-          }: {
-            firstname: String;
-            lastname: String;
-            email: String;
-            password: String;
-          }) => [firstname, lastname, email, password]
-        )
+        userData.map(({ firstname, lastname, email, password }) => [
+          firstname,
+          lastname,
+          email,
+          password,
+        ])
       );
       const usersPromise = db.query(insertUsersQueryStr);
 

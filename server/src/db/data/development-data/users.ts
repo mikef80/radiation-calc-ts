@@ -10,5 +10,5 @@ module.exports = [
     lastname: "DevUser",
     email: "anne@devuser.com",
     password: "123456789",
-  }
+  },
 ];
