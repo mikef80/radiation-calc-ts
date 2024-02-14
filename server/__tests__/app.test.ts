@@ -112,7 +112,7 @@ describe("/api/register", () => {
   });
 });
 
-describe.only("/api/login", () => {
+describe("/api/login", () => {
   describe("POST", () => {
     it("POST:200 returns an object on login", () => {
       return request(testApp)
@@ -122,7 +122,45 @@ describe.only("/api/login", () => {
         .expect("Content-Type", /json/)
         .expect(200)
         .then(({ body }) => {
+          expect(body instanceof Object).toBe(true);
+        });
+    });
+
+    it("POST:200 returns expected properties on object", () => {
+      return request(testApp)
+        .post("/api/login")
+        .send({ email: "dave@davidson.com", password: "123456789" })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then(({ body }) => {
+          expect(body).toContainKeys(["success", "message"]);
           expect(body.success).toBe(true);
+          expect(body.message).toBe("Logged in successfully");
+        });
+    });
+
+    it("POST:400 returns an error if provided incorrect login email", () => {
+      return request(testApp)
+        .post("/api/login")
+        .send({ email: "davey@davidson.com", password: "123456789" })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.errors[0].msg).toBe("Email does not exist.");
+        });
+    });
+    
+    it("POST:400 returns an error if provided incorrect login password", () => {
+      return request(testApp)
+        .post("/api/login")
+        .send({ email: "dave@davidson.com", password: "password" })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.errors[0].msg).toBe("Wrong password.");
         });
     });
   });

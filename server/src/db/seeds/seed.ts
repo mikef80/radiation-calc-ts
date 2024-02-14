@@ -18,10 +18,20 @@ const seed = ({ userData }) => {
       return Promise.all([usersTablePromise]);
     })
     .then(() => {
-      const mappedData = userData.map(({ firstname, lastname, email, password }) => {
-        return [firstname, lastname, email, password];
+      const mappedData = userData.map(async ({ firstname, lastname, email, password }) => {
+        const hashedPassword = await new Promise((resolve, reject) => {
+          hash(password, 10, (err, hash) => {
+            if (err) reject(err);
+            resolve(hash);
+          });
+        });
+
+        return [firstname, lastname, email, hashedPassword];
       });
 
+      return Promise.all(mappedData);
+    })
+    .then((mappedData) => {
       const insertUsersQueryStr = format(
         "INSERT INTO users (firstname, lastname, email, password) VALUES %L;",
         mappedData
