@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { onLogin } from "../../api/auth";
 import { authenticateUser } from "../../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = (): JSX.Element => {
   const [values, setValues] = useState({
@@ -14,6 +15,7 @@ const Login = (): JSX.Element => {
     // rememberMe: false,
   });
   const [error, setError] = useState();
+  const navigate = useNavigate();
 
   const onChange = (e: any) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -25,7 +27,10 @@ const Login = (): JSX.Element => {
     try {
       await onLogin(values);
       dispatch(authenticateUser());
-      localStorage.setItem("isAuth", true);
+      localStorage.setItem("isAuth", 'true');
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
     } catch (error: any) {
       console.log(error.response.data.errors[0].msg);
       setError(error.response.data.errors[0].msg);
