@@ -1,8 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
-import { SyntheticEvent, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { onLogin } from "../../api/auth";
 import { authenticateUser } from "../../redux/slices/authSlice";
@@ -27,7 +26,7 @@ const Login = (): JSX.Element => {
     try {
       await onLogin(values);
       dispatch(authenticateUser());
-      localStorage.setItem("isAuth", 'true');
+      localStorage.setItem("isAuth", "true");
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
