@@ -15,12 +15,12 @@ const Login = (): JSX.Element => {
   });
   const [error, setError] = useState();
 
-  const onChange = (e) => {
+  const onChange = (e: any) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const dispatch = useDispatch();
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     try {
       await onLogin(values);
