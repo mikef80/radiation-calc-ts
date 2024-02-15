@@ -4,21 +4,17 @@ import logo from "../../logos/logo";
 
 const NavBar = (): JSX.Element => {
   return (
-    <Navbar
-      expand='md'
-      collapseOnSelect
-      bg='light'
-      sticky='top'
-      className='border border-primary'>
+    <Navbar expand='md' collapseOnSelect bg='light' sticky='top' className='border-bottom'>
       <Container>
-        <Navbar.Brand href='/' className='border border-secondary'>
-          {/* {logo()} */}
-          RadCalc
+        <Navbar.Brand href='/'>
+          <LinkContainer to='/'>
+            <Nav.Link>
+              {/* {logo()} */}
+              RadCalc
+            </Nav.Link>
+          </LinkContainer>
         </Navbar.Brand>
-        <Navbar.Toggle
-          aria-controls='basic-navbar-nav'
-          className='border-success p-1'
-        />
+        <Navbar.Toggle aria-controls='basic-navbar-nav' className='p-1' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
             <LinkContainer to='/login'>

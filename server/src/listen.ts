@@ -6,7 +6,7 @@ const { PORT = 8000 } = process.env;
 const appStart = () => {
   try {
     appToLaunch.listen(PORT, () => {
-      console.log(`The app is running at http://localhost:${PORT}`);
+      console.log(`The server is running at http://localhost:${PORT}`);
     });
   } catch (error: any) {
     console.log(`Error: ${error.message}`);
