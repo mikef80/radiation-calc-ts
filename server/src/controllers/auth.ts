@@ -45,3 +45,15 @@ exports.login = async (req: Request, res: Response) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+exports.logout = async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .clearCookie("token", { httpOnly: true })
+      .send({ success: true, message: "Logged out successfully" });
+  } catch (error:any) {
+    console.log(error.message);
+    res.send(500).send({ error: error.message });
+  }
+};
