@@ -3,47 +3,45 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 import { SyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { onRegistration } from "../../api/auth";
 
 const Signup = (): JSX.Element => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [values, setValues] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  });
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
+
+  const onChange = (e: SyntheticEvent) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const newUser = JSON.stringify({
-      firstname,
-      lastname,
-      email,
-      password,
-      // confirmPassword,
-    });
-    console.log(newUser);
-    
-    const response = await fetch("http://localhost:9090/api/auth/signup", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: newUser,
-    });
-
-    if (response.ok) {
-      setFirstname("");
-      setLastname("");
-      setEmail("");
-      setPassword("");
+    try {
+      const { data } = await onRegistration(values);
+      setError("");
+      setSuccess(data.message);
+      setValues({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+      });
       setConfirmPassword("");
-      navigate("/login");
+      setTimeout(() => {
+        navigate('/login')
+      }, 1000);
+    } catch (error: any) {
+      console.log(error.response.data.errors[0].msg);
+      setError(error.response.data.errors[0].msg);
+      setSuccess("");
     }
-
-    const returnedUser = await response.json();
-
-    console.log(returnedUser, "<-- returnedUser");
   };
 
   return (
@@ -55,47 +53,60 @@ const Signup = (): JSX.Element => {
             <Form.Label>First Name:</Form.Label>
             <Form.Control
               type='text'
+              name='firstname'
               placeholder='Enter First Name'
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              value={values.firstname}
+              onChange={(e) => onChange(e)}
+              required
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicLastName'>
             <Form.Label>Last Name:</Form.Label>
             <Form.Control
               type='text'
+              name='lastname'
               placeholder='Enter Last Name'
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              value={values.lastname}
+              onChange={(e) => onChange(e)}
+              required
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Label>Email address:</Form.Label>
             <Form.Control
               type='email'
+              name='email'
               placeholder='Enter email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onChange={(e) => onChange(e)}
+              required
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPassword'>
             <Form.Label>Password:</Form.Label>
             <Form.Control
               type='password'
+              name='password'
               placeholder='Password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onChange={(e) => onChange(e)}
+              required
             />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPasswordConfirm'>
             <Form.Label>Confirm Password:</Form.Label>
             <Form.Control
               type='password'
-              placeholder='Password'
+              name='confirm-password'
+              placeholder='Confirm Password'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </Form.Group>
+
+          <div style={{ color: "red", margin: "10px 0" }}>{error}</div>
+          <div style={{ color: "green", margin: "10px 0" }}>{success}</div>
 
           <Button variant='primary' type='submit'>
             Sign Up
