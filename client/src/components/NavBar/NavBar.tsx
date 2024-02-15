@@ -6,7 +6,7 @@ const NavBar = (): JSX.Element => {
   return (
     <Navbar expand='md' collapseOnSelect bg='light' sticky='top' className='border-bottom'>
       <Container>
-        <Navbar.Brand href='/'>
+        <Navbar.Brand>
           <LinkContainer to='/'>
             <Nav.Link>
               {/* {logo()} */}
