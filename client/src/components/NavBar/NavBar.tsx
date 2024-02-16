@@ -1,6 +1,6 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import logo from "../../logos/logo";
+// import logo from "../../logos/logo";
 
 const NavBar = (): JSX.Element => {
   return (
