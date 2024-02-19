@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  redirect,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -34,15 +35,49 @@ import RestrictedRoutes from "./components/RestrictedRoutes/RestrictedRoutes.tsx
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Root />}>
-      <Route index element={<Home />} />
-      <Route element={<RestrictedRoutes />}>
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
+      <Route
+        index
+        element={<Home />}
+        loader={async () => {
+          return null;
+        }}
+      />
+
+      {/* <Route element={<RestrictedRoutes />}> */}
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/login' element={<Login />} />
+      {/* </Route> */}
+
+      {/* <Route element={<PrivateRoutes />}> */}
+      <Route
+        path='/dashboard'
+        element={<Dashboard />}
+        loader={async () => {
+          /* const isAuth = false;
+
+          if (!isAuth) {
+            // redirect
+            throw redirect("/login");
+          } */
+          const rand = Math.random() * 2;
+          setTimeout(() => {
+            console.log("Protected route");
+          }, rand);
+          return null;
+        }}>
+        <Route
+          path='nested'
+          element={<h1>Nested protected route</h1>}
+          loader={async () => {
+            const rand = Math.random() * 2;
+            setTimeout(() => {
+              console.log("Nested Protected route");
+            }, rand);
+            return null;
+          }}
+        />
       </Route>
-      {/* <Route path='/dashboard' element={<Dashboard />} /> */}
-      <Route element={<PrivateRoutes />}>
-        <Route path='/dashboard' element={<Dashboard />} />
-      </Route>
+      {/* </Route> */}
     </Route>
   )
 );
