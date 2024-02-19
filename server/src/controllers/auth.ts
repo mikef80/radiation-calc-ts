@@ -46,6 +46,14 @@ exports.login = async (req: Request, res: Response) => {
   }
 };
 
+exports.protected2 = async (req, res) => {
+  try {
+    return res.status(200).send({ info: "protected info" });
+  } catch (error:any) {
+    console.log(error.message);
+  }
+};
+
 exports.logout = async (req, res) => {
   try {
     return res

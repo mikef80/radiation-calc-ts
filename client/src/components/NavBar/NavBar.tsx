@@ -23,6 +23,9 @@ const NavBar = (): JSX.Element => {
             <LinkContainer to='/signup'>
               <Nav.Link>Signup</Nav.Link>
             </LinkContainer>
+            {/* <LinkContainer to='/protected'>
+              <Nav.Link>Protected</Nav.Link>
+            </LinkContainer> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
