@@ -19,7 +19,6 @@ export const action = async ({ request }: { request: Request }) => {
   const pathname = new URL(request.url).searchParams.get("redirectTo") || "/dashboard";
 
   try {
-    await sleep(1500);
     await onLogin({ email, password });
     localStorage.setItem("isAuth", "true");
     return redirect(pathname);
