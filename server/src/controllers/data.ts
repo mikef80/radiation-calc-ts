@@ -4,11 +4,8 @@ import { Request, Response } from "express";
 exports.getCalcs = async (req: Request, res: Response) => {
   try {
     if (req.user) {
-      console.log(req.user);
-
       const email = req.user["email"];
       const id = req.user["id"];
-      console.log(email, id, "<-- controllers/data.ts");
 
       const { rows } = await db.query(`SELECT * FROM calculations WHERE user_id = $1;`, [id]);
 

@@ -17,8 +17,6 @@ const opts = {
 passport.use(
   new Strategy(opts, async ({ id }, done) => {
     try {
-      console.log("passport-middleware.js is doing something!");
-
       const { rows } = await ppDb.query(
         `SELECT user_id, firstname, lastname, email FROM users WHERE user_id = $1`,
         [id]
