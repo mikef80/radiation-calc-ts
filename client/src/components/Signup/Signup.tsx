@@ -108,7 +108,7 @@ const Signup = (): JSX.Element => {
           <div style={{ color: "red", margin: "10px 0" }}>{error}</div>
           <div style={{ color: "green", margin: "10px 0" }}>{success}</div>
 
-          <Button variant='primary' type='submit'>
+          <Button variant='primary' type='submit' className="w-100">
             Sign Up
           </Button>
           <Form.Group>
