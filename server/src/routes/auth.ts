@@ -5,6 +5,9 @@ const { validationMiddleware } = require("../middlewares/validation-middleware")
 const { userAuth } = require("../middlewares/auth-middleware");
 const authRouter = Router();
 
+
+
+
 // auth routes
 authRouter.post("/register", registerValidation, validationMiddleware, register);
 authRouter.post("/login", loginValidation, validationMiddleware, login);

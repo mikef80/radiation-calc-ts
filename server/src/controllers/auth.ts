@@ -35,6 +35,7 @@ exports.login = async (req: Request, res: Response) => {
 
   try {
     const token = sign(payload, process.env.SECRET);
+    console.log(token, "<-- controllers/auth.ts");
 
     return res
       .status(200)
@@ -59,6 +60,10 @@ exports.logout = async (req: Request, res: Response) => {
 };
 
 exports.restricted = async (req: Request, res: Response) => {
+  console.log("auth.ts - restricted function");
+  console.log(req.user, '<-- REQUEST in controllers/auth.js');
+  
+
   try {
     return res.status(200).send({ info: "protected info" });
   } catch (error: any) {
