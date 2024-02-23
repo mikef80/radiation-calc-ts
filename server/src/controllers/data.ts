@@ -12,7 +12,7 @@ exports.getCalcs = async (req: Request, res: Response) => {
 
       const { rows } = await db.query(`SELECT * FROM calculations WHERE user_id = $1;`, [id]);
 
-      res.status(200).send({ rows });
+      res.status(200).send({ calculations: rows });
     }
   } catch (error: any) {
     console.log(error.message);

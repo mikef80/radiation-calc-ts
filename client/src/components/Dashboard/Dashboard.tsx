@@ -13,7 +13,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
-    data: { rows: calculations },
+    data: { calculations },
   } = useLoaderData() as Awaited<ReturnType<typeof loader>>;
 
   const logout = async () => {
