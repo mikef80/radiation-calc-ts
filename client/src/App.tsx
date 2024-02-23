@@ -6,7 +6,8 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Login /* { loader as loginLoader } */, {
+import Login, {
+  loader as loginLoader,
   action as loginAction,
 } from "./components/Login/Login.tsx";
 import Signup from "./components/Signup/Signup.tsx";
@@ -42,7 +43,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<Root />}>
       <Route index element={<Home />} />
       <Route path='/signup' element={<Signup />} />
-      <Route path='/login' element={<Login />} /* loader={loginLoader} */ action={loginAction} />
+      <Route path='/login' element={<Login />} loader={loginLoader} action={loginAction} />
       <Route
         path='/dashboard'
         element={<Dashboard />}
