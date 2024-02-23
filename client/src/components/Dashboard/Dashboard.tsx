@@ -5,8 +5,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { requireAuth } from "../utils/utils";
 
 export const loader = async ({ request }: { request: Request }) => {
-  
-
   await requireAuth(request);
   return null;
 };
