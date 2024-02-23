@@ -46,14 +46,22 @@ exports.login = async (req: Request, res: Response) => {
   }
 };
 
-exports.logout = async (req, res) => {
+exports.logout = async (req: Request, res: Response) => {
   try {
     return res
       .status(200)
       .clearCookie("token", { httpOnly: true })
       .send({ success: true, message: "Logged out successfully" });
-  } catch (error:any) {
+  } catch (error: any) {
     console.log(error.message);
     res.send(500).send({ error: error.message });
+  }
+};
+
+exports.restricted = async (req: Request, res: Response) => {
+  try {
+    return res.status(200).send({ info: "protected info" });
+  } catch (error: any) {
+    console.log(error.message);
   }
 };

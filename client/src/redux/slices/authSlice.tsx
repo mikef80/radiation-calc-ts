@@ -20,9 +20,11 @@ export const authSlice = createSlice({
   reducers: {
     authenticateUser: (state) => {
       state.isAuth = true;
+      localStorage.setItem("isAuth", "true");
     },
     unauthenticateUser: (state) => {
       state.isAuth = false;
+      localStorage.removeItem("isAuth");
     },
   },
 });

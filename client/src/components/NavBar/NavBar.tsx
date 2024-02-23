@@ -1,6 +1,6 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import logo from "../../logos/logo";
+// import logo from "../../logos/logo";
 
 const NavBar = (): JSX.Element => {
   return (
@@ -22,6 +22,9 @@ const NavBar = (): JSX.Element => {
             </LinkContainer>
             <LinkContainer to='/signup'>
               <Nav.Link>Signup</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to='/dashboard'>
+              <Nav.Link>Dashboard</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
