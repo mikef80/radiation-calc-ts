@@ -16,12 +16,13 @@ export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
+  const pathname = new URL(request.url).searchParams.get("redirectTo") || "/dashboard";
 
   try {
     await sleep(1500);
     await onLogin({ email, password });
     localStorage.setItem("isAuth", "true");
-    return redirect("/dashboard");
+    return redirect(pathname);
   } catch (error: any) {
     return "Couldn't log user in";
   }

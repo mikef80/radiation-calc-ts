@@ -10,6 +10,8 @@ import Login, {
   loader as loginLoader,
   action as loginAction,
 } from "./components/Login/Login.tsx";
+import { loader as dashboardLoader } from "./components/Dashboard/Dashboard.tsx";
+
 import Signup from "./components/Signup/Signup.tsx";
 import Root from "./components/Root/Root.tsx";
 import Error from "./components/Error/Error.tsx";
@@ -44,11 +46,16 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/login' element={<Login />} loader={loginLoader} action={loginAction} />
-      <Route
-        path='/dashboard'
-        element={<Dashboard />}
-        loader={async () => await requireAuth()}
-      />
+      <Route path='/dashboard' element={<Dashboard />} loader={dashboardLoader}>
+        <Route
+          path='nested'
+          element={<h1>nested protected route</h1>}
+          loader={async ({ request }: { request: Request }) => {
+            await requireAuth(request);
+            return null;
+          }}
+        />
+      </Route>
     </Route>
   )
 );
