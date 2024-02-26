@@ -27,8 +27,9 @@ const seed = ({ userData, calculationsData }) => {
         const calculationsTablePromise = db.query(`
           CREATE TABLE calculations (
             calculation_id SERIAL PRIMARY KEY NOT NULL,
+            calculation_date VARCHAR NOT NULL,
             user_id SERIAL NOT NULL REFERENCES users(user_id),
-            calc_type VARCHAR NOT NULL,
+            calculation_type VARCHAR NOT NULL,
             current_doserate DECIMAL,
             current_distance DECIMAL,
             new_distance DECIMAL,
@@ -38,22 +39,6 @@ const seed = ({ userData, calculationsData }) => {
 
         return Promise.all([usersTablePromise, calculationsTablePromise]);
       })
-      /* .then(() => {
-      console.log("3");
-      const calculationsTablePromise = db.query(`
-      CREATE TABLE calculations (
-        calculation_id SERIAL PRIMARY KEY NOT NULL,
-        user_id SERIAL NOT NULL REFERENCES users(user_id),
-        calc_type VARCHAR NOT NULL,
-        current_doserate DECIMAL,
-        current_distance DECIMAL,
-        new_distance DECIMAL,
-        new_doserate DECIMAL
-    );`);
-      console.log("3.5");
-
-      return Promise.all([calculationsTablePromise]);
-    }) */
       .then(async () => {
         const mappedUserData = await userData.map(
           async ({ firstname, lastname, email, password }) => {
@@ -85,18 +70,20 @@ const seed = ({ userData, calculationsData }) => {
         const usersPromise = db.query(insertUsersQueryStr);
 
         const insertCalcQueryStr = format(
-          "INSERT INTO calculations (user_id, calc_type, current_doserate, current_distance, new_distance, new_doserate) VALUES %L;",
+          "INSERT INTO calculations (calculation_date, user_id, calculation_type, current_doserate, current_distance, new_distance, new_doserate) VALUES %L;",
           calculationsData.map(
             ({
+              calculation_date,
               user_id,
-              calc_type,
+              calculation_type,
               current_doserate,
               current_distance,
               new_distance,
               new_doserate,
             }) => [
+              calculation_date,
               user_id,
-              calc_type,
+              calculation_type,
               current_doserate,
               current_distance,
               new_distance,
@@ -108,6 +95,7 @@ const seed = ({ userData, calculationsData }) => {
         const calcsPromise = db.query(insertCalcQueryStr);
 
         console.log("5");
+
         return Promise.all([usersPromise, calcsPromise]);
       })
   );

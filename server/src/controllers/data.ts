@@ -7,7 +7,7 @@ exports.getCalcs = async (req: Request, res: Response) => {
       const email = req.user["email"];
       const id = req.user["id"];
 
-      const { rows } = await db.query(`SELECT * FROM calculations WHERE user_id = $1;`, [id]);
+      const { rows } = await db.query(`SELECT * FROM calculations WHERE user_id = $1 ORDER BY calculation_date DESC;`, [id]);
 
       res.status(200).send({ calculations: rows });
     }
