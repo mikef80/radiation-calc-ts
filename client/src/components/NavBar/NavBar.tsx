@@ -4,13 +4,13 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const NavBar = (): JSX.Element => {
   return (
-    <Navbar expand='md' collapseOnSelect bg='light' sticky='top' className='border-bottom'>
+    <Navbar expand='md' collapseOnSelect bg='light' fixed='top' className='border-bottom'>
       <Container>
         <Navbar.Brand>
           <LinkContainer to='/'>
             <Nav.Link>
               {/* {logo()} */}
-              RadCalc
+              <h1 className="mb-0">RadCalc</h1>
             </Nav.Link>
           </LinkContainer>
         </Navbar.Brand>

@@ -15,23 +15,28 @@ import Error from "./components/Error/Error.tsx";
 import Home from "./components/Home/Home.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
 import { requireAuth } from "./components/utils/utils.tsx";
+import CalculationDetails, {
+  action as calculationAction,
+} from "./components/CalculationDetails/CalculationDetails.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<Root />} errorElement={<Error />}>
+    <Route path='/' element={<Root />} /* errorElement={<Error />} */>
       <Route index element={<Home />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/login' element={<Login />} loader={loginLoader} action={loginAction} />
       <Route path='/dashboard' element={<Dashboard />} loader={dashboardLoader}>
-        <Route
-          path='nested'
-          element={<h1>nested protected route</h1>}
-          loader={async ({ request }: { request: Request }) => {
-            await requireAuth(request);
-            return null;
-          }}
-        />
+        {/* <Route
+          path='calculations/:calculation_id'
+          element={<CalculationDetails />}
+        /> */}
       </Route>
+      <Route path='/calculations/:calculation_id' element={<CalculationDetails />} />
+      <Route
+        path='/calculations/new'
+        element={<CalculationDetails />}
+        action={calculationAction}
+      />
     </Route>
   )
 );
