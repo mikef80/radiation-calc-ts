@@ -8,10 +8,6 @@ export const loader = ({ request }: { request: Request }) => {
   return new URL(request.url).searchParams.get("message");
 };
 
-const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
 export const action = async ({ request }: { request: Request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
@@ -19,7 +15,6 @@ export const action = async ({ request }: { request: Request }) => {
   const pathname = new URL(request.url).searchParams.get("redirectTo") || "/dashboard";
 
   try {
-    await sleep(1500);
     await onLogin({ email, password });
     localStorage.setItem("isAuth", "true");
     return redirect(pathname);

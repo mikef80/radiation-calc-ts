@@ -9,6 +9,8 @@ const authRouter = Router();
 authRouter.post("/register", registerValidation, validationMiddleware, register);
 authRouter.post("/login", loginValidation, validationMiddleware, login);
 authRouter.get("/logout", logout);
-authRouter.get('/restricted',userAuth,restricted)
+authRouter.get("/restricted", userAuth, restricted);
+
+
 
 module.exports = authRouter;

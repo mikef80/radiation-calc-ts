@@ -3,10 +3,23 @@ import { Outlet } from "react-router-dom";
 
 const Root = () => {
   return (
-    <div className='vh-100 p-0 d-flex flex-column grow'>
+    <>
       <NavBar />
-      <Outlet />
-    </div>
+      <div
+        className='p-2 d-flex flex-column justify-content-center bg-dark'
+        // style={{ height: `calc(100vh - 60.14px)` }}
+        /* style={{
+          height: `calc(100vh - 60.14px)`,
+          bottom: 0,
+          left: 0,
+          position: "absolute",
+          width: "100%",
+        }} */
+        style={{ height: `100vh` }} // I think this one is best
+      >
+        <Outlet />
+      </div>
+    </>
   );
 };
 
