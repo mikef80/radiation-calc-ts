@@ -3,6 +3,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 import { useLoaderData, Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { onLogin } from "../../api/auth";
+import { useDispatch } from "react-redux";
+import { authenticateUser } from "../../redux/slices/authSlice";
 
 export const loader = ({ request }: { request: Request }) => {
   return new URL(request.url).searchParams.get("message");
@@ -13,12 +15,16 @@ export const action = async ({ request }: { request: Request }) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const pathname = new URL(request.url).searchParams.get("redirectTo") || "/dashboard";
+  // const dispatch = useDispatch(); /* can't use hook outside of component function */
 
   try {
     await onLogin({ email, password });
+    // dispatch(authenticateUser());
     localStorage.setItem("isAuth", "true");
     return redirect(pathname);
   } catch (error: any) {
+    console.log(error);
+
     return "Couldn't log user in";
   }
 };
