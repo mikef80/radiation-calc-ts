@@ -11,10 +11,8 @@ import Login, {
 import { loader as dashboardLoader } from "./components/Dashboard/Dashboard.tsx";
 import Signup from "./components/Signup/Signup.tsx";
 import Root from "./components/Root/Root.tsx";
-import Error from "./components/Error/Error.tsx";
 import Home from "./components/Home/Home.tsx";
 import Dashboard from "./components/Dashboard/Dashboard.tsx";
-import { requireAuth } from "./components/utils/utils.tsx";
 import CalculationDetails, {
   action as calculationAction,
 } from "./components/CalculationDetails/CalculationDetails.tsx";
