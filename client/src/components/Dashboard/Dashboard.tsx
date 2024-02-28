@@ -54,7 +54,7 @@ const Dashboard = () => {
                   key={calc.calculation_id}
                   onClick={() =>
                     navigate(`/calculations/${calc.calculation_id}`, {
-                      state: { ...calc, readOnly: true },
+                      state: calc,
                     })
                   }>
                   <Col className='py-2 text-center'>{calc.calculation_date_time}</Col>
