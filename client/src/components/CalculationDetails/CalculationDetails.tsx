@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { Button, ButtonGroup, ToggleButton } from "react-bootstrap";
-import {
-  Form,
-  Navigate,
-  redirect,
-  useLocation,
-  useNavigation,
-  useSearchParams,
-} from "react-router-dom";
-import { postCalculation } from "../../api/data";
+import { Form, useLocation, useNavigation, useSearchParams } from "react-router-dom";
+import BackArrow from "../Images/BackArrow";
 
 export const loader = ({ request }: { request: Request }) => {
   return new URL(request.url).searchParams.get("message");
@@ -37,7 +30,16 @@ const CalculationDetails = () => {
       <div className='col-11 col-sm-8 col-md-6 col-lg-4 col-xl-3 p-3 rounded bg-white'>
         <Form>
           <fieldset disabled>
-            <h3 className='text-center'>CalculationDetails.tsx</h3>
+            <div className='d-flex'>
+              <div>
+                <BackArrow width={20} height={20}  />
+              </div>
+              <h3 className='text-center ps-2'>
+                {state.calculation_type === "RDC"
+                  ? "Radiation Dose Calculator"
+                  : "something else"}
+              </h3>
+            </div>
             <div className='d-flex justify-content-between '>
               <ButtonGroup>
                 {doserateUnits.map((radio, idx) => (
@@ -67,7 +69,6 @@ const CalculationDetails = () => {
                     variant={idx % 2 ? "outline-success" : "outline-danger"}
                     name='distanceRadio'
                     value={radio.value}
-                    // checked={distanceRadioValue === radio.value}
                     checked={
                       state
                         ? state.distance_unit === radio.value
@@ -80,7 +81,6 @@ const CalculationDetails = () => {
               </ButtonGroup>
             </div>
 
-            {/* These two fields are always present */}
             <div className='d-flex flex-column'>
               <div className='order-0 flex-column d-flex'>
                 <label htmlFor='current_doserate'>Current doserate:</label>
@@ -94,7 +94,7 @@ const CalculationDetails = () => {
                     className='rounded p-1 flex-grow-1'
                     style={{ maxWidth: "80%" }}
                   />
-                  <span className='p-1'>{doserateRadioValue}</span>
+                  <span className='p-1'>{state.calculation_unit}</span>
                 </div>
               </div>
 
@@ -110,11 +110,10 @@ const CalculationDetails = () => {
                     className='rounded p-1 flex-grow-1'
                     style={{ maxWidth: "80%" }}
                   />
-                  <span className='p-1'>{distanceRadioValue}</span>
+                  <span className='p-1'>{state.distance_unit}</span>
                 </div>
               </div>
-              {/* These two fields are always present and in this order */}
-              {/* RDC - write access, LOE distance calc - read access */}
+
               <div
                 className={`flex-column d-flex ${calcType === "rdc" ? "order-2" : "order-3"}`}>
                 <label htmlFor='new_operating_distance'>New operating distance:</label>
@@ -129,10 +128,10 @@ const CalculationDetails = () => {
                     className='rounded p-1 flex-grow-1'
                     style={{ maxWidth: "80%" }}
                   />
-                  <span className='p-1'>{distanceRadioValue}</span>
+                  <span className='p-1'>{state.distance_unit}</span>
                 </div>
               </div>
-              {/* RDC - read access, LOE distance calc - write access */}
+
               {state && (
                 <div
                   className={` flex-column d-flex ${
@@ -150,7 +149,7 @@ const CalculationDetails = () => {
                       className='rounded p-1 flex-grow-1'
                       style={{ maxWidth: "80%" }}
                     />
-                    <span className='p-1'>{doserateRadioValue}</span>
+                    <span className='p-1'>{state.calculation_unit}</span>
                   </div>
                 </div>
               )}
@@ -160,30 +159,37 @@ const CalculationDetails = () => {
                 </Button>
               )}
             </div>
-            <div className='d-flex flex-column mt-4 border-2 border'>
-              <h5 className='text-center'>Time (minutes) to reach DRL</h5>
-              <table className='table text-center'>
-                <thead>
-                  <tr>
-                    <th scope='col' className='bg-success border border-2'>
-                      DRL1 - 1 mSv
-                    </th>
-                    <th scope='col' className='bg-warning border border-2'>
-                      DRL2 - 5 mSv
-                    </th>
-                    <th scope='col' className='bg-danger border border-2'>
-                      DRL3 - 100 mSv
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className=' border border-2'>{(1 / state.new_doserate) * 60}</td>
-                    <td className=' border border-2'>{(5 / state.new_doserate) * 60}</td>
-                    <td className=' border border-2'>{(100 / state.new_doserate) * 60}</td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <div className='container text-center mt-4 border border-1'>
+              <div className='row'>
+                <h5 className='col'>Time (minutes) to reach DRL</h5>
+              </div>
+              <div className='row'>
+                <div className='col bg-success'>
+                  DRL1
+                  <br />1 mSv
+                </div>
+                <div className='col bg-warning '>
+                  DRL2
+                  <br />5 mSv
+                </div>
+                <div className='col bg-danger'>
+                  DRL3
+                  <br />
+                  100 mSv
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col border border-1'>
+                  {Math.floor((1 / state.new_doserate) * 60)}
+                </div>
+                <div className='col border border-1'>
+                  {Math.floor((5 / state.new_doserate) * 60)}
+                </div>
+                <div className='col border border-1'>
+                  {Math.floor((100 / state.new_doserate) * 60)}
+                </div>
+              </div>
             </div>
           </fieldset>
         </Form>

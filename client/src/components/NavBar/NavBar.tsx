@@ -1,5 +1,6 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import RadLogo from "../Images/RadLogo";
 // import logo from "../../logos/logo";
 
 const NavBar = (): JSX.Element => {
@@ -10,7 +11,10 @@ const NavBar = (): JSX.Element => {
           <LinkContainer to='/'>
             <Nav.Link>
               {/* {logo()} */}
-              <h1 className="mb-0">RadCalc</h1>
+              {/* <h1 className="mb-0">RadCalc</h1> */}
+              <h1 className='mb-0'>
+                <RadLogo width={40} height={40} />
+              </h1>
             </Nav.Link>
           </LinkContainer>
         </Navbar.Brand>

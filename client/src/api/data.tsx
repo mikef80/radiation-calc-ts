@@ -6,7 +6,5 @@ export async function getCalculations() {
 }
 
 export async function postCalculation(calcData: any) {
-  console.log(calcData, '<--calcData');
-  
   return await axios.post("http://localhost:8000/data/calcs", calcData);
 }

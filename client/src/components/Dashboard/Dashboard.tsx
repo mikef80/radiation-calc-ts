@@ -57,7 +57,7 @@ const Dashboard = () => {
                       state: calc,
                     })
                   }>
-                  <Col className='py-2 text-center'>{calc.calculation_date_time}</Col>
+                  <Col className='py-2 text-center'>{`${new Date(calc.calculation_date_time).toLocaleDateString()}  ${new Date(calc.calculation_date_time).toLocaleTimeString()}`}</Col>
                   <Col className='py-2 text-center'>{calc.calculation_type}</Col>
                 </Row>
               );

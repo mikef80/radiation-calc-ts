@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { Button, ButtonGroup, ToggleButton, Form } from "react-bootstrap";
-import {
-  // Form,
-  Navigate,
-  redirect,
-  useLocation,
-  useNavigate,
-  useNavigation,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { postCalculation } from "../../api/data";
 
 export const loader = ({ request }: { request: Request }) => {
@@ -56,9 +48,10 @@ const CalculationInput = () => {
       newCalc.current_distance &&
       newCalc.new_operating_distance
     ) {
-      newCalc.new_doserate =
-        +(newCalc.current_doserate *
-        Math.pow(+newCalc.current_distance / +newCalc.new_operating_distance, 2)).toFixed(2);
+      newCalc.new_doserate = +(
+        newCalc.current_doserate *
+        Math.pow(+newCalc.current_distance / +newCalc.new_operating_distance, 2)
+      ).toFixed(2);
       // (document.getElementById("new_doserate") as HTMLInputElement).value =
       //  new_doserate.toString();
 
