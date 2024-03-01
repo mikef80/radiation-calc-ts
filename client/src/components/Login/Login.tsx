@@ -5,6 +5,7 @@ import { useLoaderData, Form, redirect, useActionData, useNavigation } from "rea
 import { onLogin } from "../../api/auth";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../redux/slices/authSlice";
+import { useLocalStorage } from "usehooks-ts";
 
 export const loader = ({ request }: { request: Request }) => {
   return new URL(request.url).searchParams.get("message");
@@ -20,7 +21,8 @@ export const action = async ({ request }: { request: Request }) => {
   try {
     await onLogin({ email, password });
     // dispatch(authenticateUser());
-    localStorage.setItem("isAuth", "true");
+    // localStorage.setItem("isAuth", "true");
+    useLocalStorage("isAuth,true");
     return redirect(pathname);
   } catch (error: any) {
     console.log(error);
@@ -33,6 +35,10 @@ const Login = (): JSX.Element => {
   let loginMsg: any = useLoaderData();
   const errorMessage: any = useActionData();
   const navigation = useNavigation();
+
+  const isAuth = localStorage.getItem("isAuth") === "true";
+
+  if (isAuth) redirect("/dashboard");
 
   return (
     <div className='login template d-flex justify-content-center align-items-center w-100 h-100 bg-dark'>

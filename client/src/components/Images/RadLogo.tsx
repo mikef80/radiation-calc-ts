@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const RadLogo = ({ width, height }: { width: number; height: number }) => {
+const RadLogo = ({ width, height, className }: { width: number; height: number,className:string }) => {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +10,7 @@ const RadLogo = ({ width, height }: { width: number; height: number }) => {
       width={width}
       height={height}
       fill='currentColor'
-      className='bi bi-radioactive'
+      className={`bi bi-radioactive ${className}`}
       viewBox='0 0 16 16'
       onClick={() => navigate("/")}>
       <path d='M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8' />
