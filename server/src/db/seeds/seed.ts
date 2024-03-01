@@ -27,13 +27,15 @@ const seed = ({ userData, calculationsData }) => {
         const calculationsTablePromise = db.query(`
           CREATE TABLE calculations (
             calculation_id SERIAL PRIMARY KEY NOT NULL,
-            calculation_date VARCHAR NOT NULL,
+            calculation_date_time VARCHAR NOT NULL,
             user_id SERIAL NOT NULL REFERENCES users(user_id),
             calculation_type VARCHAR NOT NULL,
             current_doserate DECIMAL,
             current_distance DECIMAL,
-            new_distance DECIMAL,
-            new_doserate DECIMAL
+            new_operating_distance DECIMAL,
+            new_doserate DECIMAL,
+            calculation_unit VARCHAR(6) NOT NULL,
+            distance_unit VARCHAR NOT NULL
         );`);
         console.log("3.5");
 
@@ -70,24 +72,28 @@ const seed = ({ userData, calculationsData }) => {
         const usersPromise = db.query(insertUsersQueryStr);
 
         const insertCalcQueryStr = format(
-          "INSERT INTO calculations (calculation_date, user_id, calculation_type, current_doserate, current_distance, new_distance, new_doserate) VALUES %L;",
+          "INSERT INTO calculations (calculation_date_time, user_id, calculation_type, current_doserate, current_distance, new_operating_distance, new_doserate, calculation_unit, distance_unit) VALUES %L;",
           calculationsData.map(
             ({
-              calculation_date,
+              calculation_date_time,
               user_id,
               calculation_type,
               current_doserate,
               current_distance,
-              new_distance,
+              new_operating_distance,
               new_doserate,
+              calculation_unit,
+              distance_unit
             }) => [
-              calculation_date,
+              calculation_date_time,
               user_id,
               calculation_type,
               current_doserate,
               current_distance,
-              new_distance,
+              new_operating_distance,
               new_doserate,
+              calculation_unit,
+              distance_unit
             ]
           )
         );
@@ -129,7 +135,7 @@ const seed = ({ userData, calculationsData }) => {
       const usersPromise = db.query(insertUsersQueryStr);
 
       const insertCalculationsQueryStr = format(
-        "INSERT INTO calculations (user_id, calc_type, current_doserate, current_distance, new_distance, new_doserate) VALUES %L;",
+        "INSERT INTO calculations (user_id, calc_type, current_doserate, current_distance, new_operating_distance, new_doserate) VALUES %L;",
         calculationsData
       );
 
