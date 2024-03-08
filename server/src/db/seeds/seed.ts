@@ -18,21 +18,24 @@ const seed = ({ userData, calculationsData }) => {
             password VARCHAR NOT NULL
         );`);
 
+      return Promise.all([usersTablePromise]);
+    })
+    .then(() => {
       const calculationsTablePromise = db.query(`
-          CREATE TABLE calculations (
-            calculation_id SERIAL PRIMARY KEY NOT NULL,
-            calculation_date_time VARCHAR NOT NULL,
-            user_id SERIAL NOT NULL REFERENCES users(user_id),
-            calculation_type VARCHAR NOT NULL,
-            current_doserate DECIMAL,
-            current_distance DECIMAL,
-            new_operating_distance DECIMAL,
-            new_doserate DECIMAL,
-            calculation_unit VARCHAR(6) NOT NULL,
-            distance_unit VARCHAR NOT NULL
-        );`);
+      CREATE TABLE calculations (
+        calculation_id SERIAL PRIMARY KEY NOT NULL,
+        calculation_date_time VARCHAR NOT NULL,
+        user_id SERIAL NOT NULL REFERENCES users(user_id),
+        calculation_type VARCHAR NOT NULL,
+        current_doserate DECIMAL,
+        current_distance DECIMAL,
+        new_operating_distance DECIMAL,
+        new_doserate DECIMAL,
+        calculation_unit VARCHAR(6) NOT NULL,
+        distance_unit VARCHAR NOT NULL
+    );`);
 
-      return Promise.all([usersTablePromise, calculationsTablePromise]);
+      return Promise.all([calculationsTablePromise]);
     })
     .then(async () => {
       const mappedUserData = await userData.map(

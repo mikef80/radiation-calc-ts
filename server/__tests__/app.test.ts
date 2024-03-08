@@ -25,7 +25,8 @@ describe("/api/register", () => {
         .expect(201)
         .then(({ body }: { body: any }) => {
           expect(body.success).toBe(true);
-          expect(body.message).toBe("The registration was successful");
+          expect(body.msg).toBe("The registration was successful");
+          expect(body.user_id).toBe(2);
         });
     });
 

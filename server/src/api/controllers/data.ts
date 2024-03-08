@@ -1,4 +1,4 @@
-const db = require("../db");
+const db = require("../../db");
 import { Request, Response } from "express";
 
 exports.getCalcs = async (req: Request, res: Response) => {

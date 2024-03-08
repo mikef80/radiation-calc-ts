@@ -1,23 +1,13 @@
-const db = require("../db");
-const { hash } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+const { registerUser } = require("../models/auth-models");
 
-exports.register = async (req: Request, res: Response) => {
-  const { firstname, lastname, email, password } = req.body;
-
-  try {
-    const hashedPassword = await hash(password, 10);
-    await db.query(
-      "insert into users(firstname, lastname, email, password) values ($1, $2, $3, $4)",
-      [firstname, lastname, email, hashedPassword]
-    );
-
-    return res.status(201).send({ success: true, message: "The registration was successful" });
-  } catch (error: any) {
-    console.log(error.message);
-    res.status(500).send({ error: error.message });
-  }
+exports.register = async (req: Request, res: Response, next: NextFunction) => {
+  registerUser(req.body)
+    .then((user_id) => {
+      res.status(201).send({ success: true, msg: "The registration was successful", user_id });
+    })
+    .catch(next);
 };
 
 exports.login = async (req: Request, res: Response) => {
