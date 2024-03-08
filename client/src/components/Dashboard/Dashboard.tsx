@@ -23,6 +23,7 @@ const Dashboard = () => {
       await onLogout();
       dispatch(unauthenticateUser());
       localStorage.removeItem("isAuth");
+      window.dispatchEvent(new Event('storage'))
       navigate("/");
     } catch (error: any) {
       console.log(error.response);

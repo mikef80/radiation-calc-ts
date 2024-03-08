@@ -32,7 +32,7 @@ const CalculationDetails = () => {
           <fieldset disabled>
             <div className='d-flex'>
               <div>
-                <BackArrow width={20} height={20}  />
+                <BackArrow width={20} height={20} />
               </div>
               <h3 className='text-center ps-2'>
                 {state.calculation_type === "RDC"
@@ -40,6 +40,7 @@ const CalculationDetails = () => {
                   : "something else"}
               </h3>
             </div>
+
             <div className='d-flex justify-content-between '>
               <ButtonGroup>
                 {doserateUnits.map((radio, idx) => (
@@ -153,11 +154,6 @@ const CalculationDetails = () => {
                   </div>
                 </div>
               )}
-              {!state && (
-                <Button variant='primary' type='submit' className='w-100 order-last mt-2'>
-                  {navigation.state === "submitting" ? "Calculating..." : "Calculate"}
-                </Button>
-              )}
             </div>
 
             <div className='container text-center mt-4 border border-1'>
@@ -190,6 +186,9 @@ const CalculationDetails = () => {
                   {Math.floor((100 / state.new_doserate) * 60)}
                 </div>
               </div>
+            </div>
+            <div style={{ fontSize: "10px" }} className='pt-1'>
+              Reading taken at: {new Date(state.calculation_date_time).toUTCString()}
             </div>
           </fieldset>
         </Form>

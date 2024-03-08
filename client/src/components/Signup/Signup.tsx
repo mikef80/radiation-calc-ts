@@ -2,8 +2,18 @@ import { Button, Form } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Nav } from "react-bootstrap";
 import { SyntheticEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { onRegistration } from "../../api/auth";
+
+export const loader = ({ request }: { request: Request }) => {
+  const isAuth = localStorage.getItem("isAuth") === "true";
+
+  if (isAuth) {
+    return redirect("/dashboard");
+  }
+
+  return new URL(request.url).searchParams.get("message");
+};
 
 const Signup = (): JSX.Element => {
   const [values, setValues] = useState({
@@ -18,11 +28,20 @@ const Signup = (): JSX.Element => {
   const navigate = useNavigate();
 
   const onChange = (e: SyntheticEvent) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setValues({
+      ...values,
+      [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value,
+    });
   };
 
   const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+
+    if (values.password !== confirmPassword) {
+      setError("Passwords don't match");
+      return;
+    }
+
     try {
       const { data } = await onRegistration(values);
       setError("");
@@ -35,10 +54,9 @@ const Signup = (): JSX.Element => {
       });
       setConfirmPassword("");
       setTimeout(() => {
-        navigate('/login')
+        navigate("/login");
       }, 1000);
     } catch (error: any) {
-      console.log(error.response.data.errors[0].msg);
       setError(error.response.data.errors[0].msg);
       setSuccess("");
     }
@@ -108,7 +126,7 @@ const Signup = (): JSX.Element => {
           <div style={{ color: "red", margin: "10px 0" }}>{error}</div>
           <div style={{ color: "green", margin: "10px 0" }}>{success}</div>
 
-          <Button variant='primary' type='submit' className="w-100">
+          <Button variant='primary' type='submit' className='w-100'>
             Sign Up
           </Button>
           <Form.Group>
