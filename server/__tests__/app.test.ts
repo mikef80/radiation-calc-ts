@@ -2,11 +2,11 @@ require("jest-sorted");
 require("jest-extended");
 const testApp = require("../src/index.ts");
 const request = require("supertest");
-const { userData } = require("../src/db/data/test-data/index.ts");
+const { userData, calculationsData } = require("../src/db/data/test-data/index.ts");
 const testDb = require("../src/db/index.ts");
-const testSeed = require("../src/db/seeds/seed");
+const testSeed = require("../src/db/seeds/seed.ts");
 
-beforeEach(() => testSeed({ userData }));
+beforeEach(() => testSeed({ userData, calculationsData }));
 afterAll(() => testDb.end());
 
 describe("/api/register", () => {
@@ -151,7 +151,7 @@ describe("/api/login", () => {
           expect(body.errors[0].msg).toBe("Email does not exist.");
         });
     });
-    
+
     it("POST:400 returns an error if provided incorrect login password", () => {
       return request(testApp)
         .post("/api/login")

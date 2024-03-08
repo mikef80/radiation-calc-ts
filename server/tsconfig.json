@@ -9,7 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false
   },
-  "include": ["src/**/*.ts","./server.ts"],
+  "include": ["src/**/*.ts","./server.ts","__tests__/**/*"],
   "exclude": ["node_modules"],
   "files": ["node_modules/jest-extended/types/index.d.ts"]
+  
 }
