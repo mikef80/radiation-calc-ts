@@ -15,6 +15,12 @@ import { useState } from "react";
 import { authenticateUser } from "../../redux/slices/authSlice";
 
 export const loader = ({ request }: { request: Request }) => {
+  const isAuth = localStorage.getItem("isAuth") === "true";
+
+  if (isAuth) {
+    return redirect("/dashboard");
+  }
+
   return new URL(request.url).searchParams.get("message");
 };
 
@@ -48,22 +54,21 @@ const Login = (): JSX.Element => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const formSubmit = async (e: any) => {
-    console.log(navigation, "<-- navigation");
-
     e.preventDefault();
-    console.log(e, "<-- e");
 
     const pathname = new URL(e.target.baseURI).searchParams.get("redirectTo") || "/dashboard";
     try {
       await onLogin({ email, password });
+
       dispatch(authenticateUser());
       localStorage.setItem("isAuth", "true");
+      window.dispatchEvent(new Event("storage"));
       return navigate(pathname);
     } catch (error: any) {
-      console.log(error);
-
+      setError(error.response.data.errors[0].msg);
       return "Couldn't log user in";
     }
   };
@@ -102,6 +107,7 @@ const Login = (): JSX.Element => {
             </div>
 
             {loginMsg && <div style={{ color: "red", margin: "10px 0" }}>{loginMsg}</div>}
+            <div style={{ color: "red", margin: "10px 0" }}>{error}</div>
 
             <Button variant='primary' type='submit' className='w-100'>
               {navigation.state === "submitting" ? "Logging in..." : "Log In"}

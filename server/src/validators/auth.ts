@@ -32,6 +32,7 @@ const emailExists = check("email").custom(async (email: Text) => {
 
 // login validation
 const loginFieldsCheck = check("email").custom(
+  
   async (value: Text, { req }: { req: Request }) => {
     const user = await db.query("select * from users where email = $1", [value]);
 
