@@ -4,7 +4,7 @@ const { PORT = 8000, CLIENT_URL } = require("./constants");
 const cookieParser = require("cookie-parser");
 const passport2 = require("passport");
 const cors = require("cors");
-const { handlePSQLErrors } = require("./api/errors");
+const { handlePSQLErrors, handleCustomErrors, handleServerErrors } = require("./api/errors");
 
 // import passport mniddleware
 require("./middlewares/passport-middleware");
@@ -25,6 +25,8 @@ app.use("/api", authRoutes);
 app.use("/data", dataRoutes);
 
 // error handlers
+app.use(handleCustomErrors);
 app.use(handlePSQLErrors);
+app.use(handleServerErrors);
 
 module.exports = app;

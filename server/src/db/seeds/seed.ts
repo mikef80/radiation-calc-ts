@@ -27,10 +27,10 @@ const seed = ({ userData, calculationsData }) => {
         calculation_date_time VARCHAR NOT NULL,
         user_id SERIAL NOT NULL REFERENCES users(user_id),
         calculation_type VARCHAR NOT NULL,
-        current_doserate DECIMAL,
-        current_distance DECIMAL,
-        new_operating_distance DECIMAL,
-        new_doserate DECIMAL,
+        current_doserate DECIMAL NOT NULL,
+        current_distance DECIMAL NOT NULL,
+        new_operating_distance DECIMAL NOT NULL,
+        new_doserate DECIMAL NOT NULL,
         calculation_unit VARCHAR(6) NOT NULL,
         distance_unit VARCHAR NOT NULL
     );`);

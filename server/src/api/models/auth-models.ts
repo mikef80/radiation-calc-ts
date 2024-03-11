@@ -18,3 +18,12 @@ exports.registerUser = async (user) => {
       return rows[0].user_id;
     });
 };
+
+exports.checkUserExists = async (user) => {
+  return db.query(`SELECT * FROM users WHERE user_id = $1`, [user.id]).then((result) => {
+    if (result.rows && result.rows.length) {
+      return true;
+    }
+    return false;
+  });
+};

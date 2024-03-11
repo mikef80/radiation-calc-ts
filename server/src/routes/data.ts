@@ -1,5 +1,5 @@
 import { Router as DataRouter } from "express";
-const { getCalcs, postCalc } = require("../api/controllers/data");
+const { getCalcs, postCalc } = require("../api/controllers/data-controllers");
 const { userAuth } = require("../middlewares/auth-middleware");
 const dataRouter = DataRouter();
 

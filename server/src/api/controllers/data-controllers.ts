@@ -1,8 +1,9 @@
 const db = require("../../db");
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+const { getCalculations } = require("../models/data-models");
 
-exports.getCalcs = async (req: Request, res: Response) => {
-  try {
+exports.getCalcs = async (req: Request, res: Response, next: NextFunction) => {
+  /* try {
     if (req.user) {
       const id = req.user["id"];
 
@@ -16,11 +17,17 @@ exports.getCalcs = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.log(error.message);
     res.status(500).send({ error: error.message });
-  }
+  } */
+  getCalculations(req.user)
+    .then((rows) => {
+      res.status(200).send({ calculations: rows });
+    })
+    .catch((err) => {
+      next(err);
+    });
 };
 
 exports.postCalc = async (req: Request, res: Response) => {
-  console.log("postCalc controller");
   const {
     calculation_date_time,
     calculation_type,
@@ -56,7 +63,7 @@ exports.postCalc = async (req: Request, res: Response) => {
       res.status(201).send({ calculation: rows[0] });
     }
   } catch (error: any) {
-    console.log(error.message);
+    // console.log(error.message);
     res.status(500).send({ error: error.message });
   }
 };

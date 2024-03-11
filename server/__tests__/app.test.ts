@@ -185,7 +185,7 @@ describe("API Routes", () => {
   });
 });
 
-describe.only("DATA routes", () => {
+describe("DATA routes", () => {
   describe("/data/calcs", () => {
     describe("GET", () => {
       it("GET:200 returns the correct calculations for a given user when logged in", () => {
@@ -214,7 +214,6 @@ describe.only("DATA routes", () => {
                     calculation_unit,
                     distance_unit,
                   } = calculationsTestData[calculation.calculation_id - 1];
-                  console.log(calculation);
 
                   expect(calculation).toContainEntries([
                     ["user_id", user_id],
@@ -231,12 +230,120 @@ describe.only("DATA routes", () => {
           });
       });
 
-      it("GET:400 return 'Unauthorized' if user not logged in", () => {
+      it("GET:400 returns 'Unauthorized' if user not logged in", () => {
         return request(testApp)
           .get("/data/calcs")
           .expect(401)
           .then(({ error }) => {
             expect(error.text).toBe("Unauthorized");
+          });
+      });
+    });
+
+    describe("POST", () => {
+      let token = "";
+
+      it("POST:201 returns the newly posted calculation object", () => {
+        const inputCalculation = {
+          calculation_date_time: new Date("2024-03-11"),
+          calculation_type: "RDC",
+          current_doserate: 1,
+          current_distance: 1,
+          new_operating_distance: 2,
+          new_doserate: 0.25,
+          calculation_unit: "µSv/hr",
+          distance_unit: "metres",
+        };
+        return request(testApp)
+          .post("/api/login")
+          .send({ email: "dave@davidson.com", password: "123456789" })
+          .then(({ header }) => {
+            token = header["set-cookie"][0].split(";")[0].split("=")[1];
+
+            return request(testApp)
+              .post("/data/calcs")
+              .send(inputCalculation)
+              .set("Cookie", `token=${token}`)
+              .expect(201)
+              .then(({ body: { calculation } }) => {
+                const {
+                  calculation_type,
+                  current_doserate,
+                  current_distance,
+                  new_operating_distance,
+                  new_doserate,
+                  calculation_unit,
+                  distance_unit,
+                } = inputCalculation;
+                expect(calculation).toContainEntries([
+                  ["calculation_type", calculation_type],
+                  ["current_doserate", current_doserate.toString()],
+                  ["current_distance", current_distance.toString()],
+                  ["new_operating_distance", new_operating_distance.toString()],
+                  ["new_doserate", new_doserate.toString()],
+                  ["calculation_unit", calculation_unit],
+                  ["distance_unit", distance_unit],
+                ]);
+                expect(calculation.calculation_id).toBe(3);
+                expect(calculation.calculation_id).toBe(3);
+                expect(calculation.user_id).toBe(1);
+              });
+          });
+      });
+
+      it("POST:401 returns an error if user not authenticated", () => {
+        const inputCalculation = {
+          calculation_date_time: new Date("2024-03-11"),
+          calculation_type: "RDC",
+          current_doserate: 1,
+          current_distance: 1,
+          new_operating_distance: 2,
+          new_doserate: 0.25,
+          calculation_unit: "µSv/hr",
+          distance_unit: "metres",
+        };
+        return request(testApp)
+          .post("/api/login")
+          .send({ email: "dave@davidson.com", password: "123456789" })
+          .then(() => {
+            return request(testApp)
+              .post("/data/calcs")
+              .send(inputCalculation)
+              .expect(401)
+              .then(({ error }) => {
+                expect(error.text).toBe("Unauthorized");
+              });
+          });
+      });
+
+      it("POST:500 returns an error if missing required calculation object data", () => {
+        const inputCalculation = {
+          calculation_date_time: new Date("2024-03-11"),
+          calculation_type: "RDC",
+          current_doserate: 1,
+          current_distance: 1,
+          new_operating_distance: 2,
+          // new_doserate: 0.25,
+          calculation_unit: "µSv/hr",
+          distance_unit: "metres",
+        };
+        return request(testApp)
+          .post("/api/login")
+          .send({ email: "dave@davidson.com", password: "123456789" })
+          .then(({ header }) => {
+            token = header["set-cookie"][0].split(";")[0].split("=")[1];
+
+            return request(testApp)
+              .post("/data/calcs")
+              .send(inputCalculation)
+              .set("Cookie", `token=${token}`)
+              .expect(500)
+              .then(({ text }) => {
+                const { error } = JSON.parse(text);
+                expect(error).toBe(
+                  'null value in column "new_doserate" of relation "calculations" violates not-null constraint'
+                );
+              });
           });
       });
     });
