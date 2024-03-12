@@ -7,6 +7,7 @@ const testDb = require("../src/db/index.ts");
 const testSeed = require("../src/db/seeds/seed.ts");
 const { userAuth } = require("../src/middlewares/auth-middleware");
 const calculationsTestData = require("../src/db/data/test-data/calculations");
+const endpoints = require("../endpoints.json");
 
 beforeEach(() => testSeed({ userData, calculationsData }));
 afterAll(() => testDb.end());
@@ -179,6 +180,19 @@ describe("API Routes", () => {
           .then(({ body }) => {
             expect(body.success).toBeTrue();
             expect(body.msg).toBe("Logged out successfully");
+          });
+      });
+    });
+  });
+
+  describe("/api", () => {
+    describe("GET", () => {
+      it("GET:200 returns an object detailing available endpoints", () => {
+        return request(testApp)
+          .get("/api")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.endpoints).toEqual(endpoints);
           });
       });
     });

@@ -12,6 +12,7 @@ exports.getCalcs = async (req: Request, res: Response, next: NextFunction) => {
 
 exports.postCalc = async (req: Request, res: Response, next: NextFunction) => {
   const { body, user } = req;
+
   postCalculations(body, user)
     .then((rows) => {
       res.status(201).send({ calculation: rows[0] });
