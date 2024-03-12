@@ -201,8 +201,6 @@ describe("DATA routes", () => {
               .set("Cookie", `token=${cookie}`)
               .expect(200)
               .then(({ body: { calculations } }) => {
-                // console.log(calculationsTestData[0]);
-
                 calculations.forEach((calculation) => {
                   const {
                     user_id,
@@ -316,7 +314,7 @@ describe("DATA routes", () => {
           });
       });
 
-      it("POST:500 returns an error if missing required calculation object data", () => {
+      it("POST:400 returns an error if missing required calculation object data", () => {
         const inputCalculation = {
           calculation_date_time: new Date("2024-03-11"),
           calculation_type: "RDC",
@@ -337,12 +335,10 @@ describe("DATA routes", () => {
               .post("/data/calcs")
               .send(inputCalculation)
               .set("Cookie", `token=${token}`)
-              .expect(500)
-              .then(({ text }) => {
-                const { error } = JSON.parse(text);
-                expect(error).toBe(
-                  'null value in column "new_doserate" of relation "calculations" violates not-null constraint'
-                );
+              .expect(400)
+              .then(({ error: { text } }) => {
+                const { msg } = JSON.parse(text);
+                expect(msg).toBe("Bad request");
               });
           });
       });

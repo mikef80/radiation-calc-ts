@@ -1,5 +1,6 @@
 const db = require("../../db");
 const { hash } = require("bcryptjs");
+const { sign } = require("jsonwebtoken");
 
 exports.registerUser = async (user) => {
   const { firstname, lastname, email, password } = user;
@@ -17,6 +18,17 @@ exports.registerUser = async (user) => {
 
       return rows[0].user_id;
     });
+};
+
+exports.loginUser = async (user) => {
+  const payload = {
+    id: user.user_id,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+  };
+
+  return sign(payload, process.env.SECRET);
 };
 
 exports.checkUserExists = async (user) => {
