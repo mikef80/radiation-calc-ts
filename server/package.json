@@ -9,6 +9,7 @@
     "test": "jest --watch",
     "dev": "nodemon server.ts",
     "start": "ts-node server.ts",
+    "seed-prod":"NODE_ENV=production yarn seed",
     "build": "tsc",
     "serve": "node dist/index.js"
   },
