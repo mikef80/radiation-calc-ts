@@ -7,9 +7,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "moduleDetection": "force"
   },
-  "include": ["src/**/*.ts","./server.ts"],
+  "include": ["src/**/*.ts","./server.ts","__tests__/**/*"],
   "exclude": ["node_modules"],
   "files": ["node_modules/jest-extended/types/index.d.ts"]
+  
 }

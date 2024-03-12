@@ -23,7 +23,7 @@ const lastname = check("lastname")
 
 // check if email already exists
 const emailExists = check("email").custom(async (email: Text) => {
-  const { rows } = await db.query("select * from users where email = $1", [email]);
+  const { rows } = await db.query("SELECT * FROM users WHERE email = $1", [email]);
 
   if (rows.length) {
     throw new Error("Email already exists.");
@@ -32,7 +32,6 @@ const emailExists = check("email").custom(async (email: Text) => {
 
 // login validation
 const loginFieldsCheck = check("email").custom(
-  
   async (value: Text, { req }: { req: Request }) => {
     const user = await db.query("select * from users where email = $1", [value]);
 
