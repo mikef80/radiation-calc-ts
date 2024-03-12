@@ -9,6 +9,7 @@ export const loader = ({ request }: { request: Request }) => {
 
 const CalculationDetails = () => {
   const { state } = useLocation();
+  console.log(state);
 
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
@@ -177,13 +178,23 @@ const CalculationDetails = () => {
               </div>
               <div className='row'>
                 <div className='col border border-1'>
-                  {Math.floor((1 / state.new_doserate) * 60)}
+                  {Math.floor(
+                    ((state.calculation_unit === "mSv/hr" ? 1 : 1000) / state.new_doserate) *
+                      60
+                  )}
                 </div>
                 <div className='col border border-1'>
-                  {Math.floor((5 / state.new_doserate) * 60)}
+                  {Math.floor(
+                    ((state.calculation_unit === "mSv/hr" ? 5 : 5000) / state.new_doserate) *
+                      60
+                  )}
                 </div>
                 <div className='col border border-1'>
-                  {Math.floor((100 / state.new_doserate) * 60)}
+                  {Math.floor(
+                    ((state.calculation_unit === "mSv/hr" ? 100 : 100000) /
+                      state.new_doserate) *
+                      60
+                  )}
                 </div>
               </div>
             </div>
