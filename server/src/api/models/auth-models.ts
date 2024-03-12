@@ -39,3 +39,24 @@ exports.checkUserExists = async (user) => {
     return false;
   });
 };
+
+exports.updateUserTerms = async (user, body) => {
+  console.log(user);
+  const { termsagreed } = body;
+  console.log(termsagreed);
+  
+
+  return db
+    .query(
+      `
+  UPDATE users
+  SET terms = $1, termsagreed = $2
+  WHERE user_id = $3
+  RETURNING *
+  `,
+      ["testTerms", true, user.id]
+    )
+    .then(({ rows }) => {
+      return rows[0].termsagreed;
+    });
+};

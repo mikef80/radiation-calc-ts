@@ -197,6 +197,28 @@ describe("API Routes", () => {
       });
     });
   });
+
+  describe.only("/api/terms", () => {
+    describe("POST", () => {
+      it("POST:200 returns an object confirming consent to terms", () => {
+        return request(testApp)
+          .post("/api/login")
+          .send({ email: "dave@davidson.com", password: "123456789" })
+          .then(({ header }) => {
+            const cookie = header["set-cookie"][0].split(";")[0].split("=")[1];
+
+            return request(testApp)
+              .post("/api/terms")
+              .send({ termsagreed: true })
+              .set("Cookie", `token=${cookie}`)
+              .expect(200)
+              .then(({ body }) => {
+                expect(body.termsAgreed).toBe(true);
+              });
+          });
+      });
+    });
+  });
 });
 
 describe("DATA routes", () => {

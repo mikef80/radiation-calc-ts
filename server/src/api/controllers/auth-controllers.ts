@@ -1,6 +1,6 @@
 const { sign } = require("jsonwebtoken");
 import { Request, Response, NextFunction } from "express";
-const { registerUser, loginUser } = require("../models/auth-models");
+const { registerUser, loginUser, updateUserTerms } = require("../models/auth-models");
 const endpoints = require("../../../endpoints.json");
 
 exports.register = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +18,6 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     user = req.user;
   }
-  
 
   loginUser(user)
     .then((token) => {
@@ -44,6 +43,18 @@ exports.logout = async (req: Request, res: Response) => {
 
 exports.getEndpoints = (req: Request, res: Response, next: NextFunction) => {
   res.status(200).send({ endpoints });
+};
+
+exports.agreeToTerms = (req: Request, res: Response, next: NextFunction) => {
+  console.log("here1");
+  let user;
+  if (req.user) {
+    user = req.user;
+  }
+
+  updateUserTerms(user, req.body).then((termsAgreed) => {
+    res.status(200).send({ termsAgreed });
+  });
 };
 
 /* exports.restricted = async (req: Request, res: Response) => {
