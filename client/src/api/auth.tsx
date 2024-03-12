@@ -13,6 +13,10 @@ export async function onLogout() {
   return await axios.get("http://localhost:8000/api/logout");
 }
 
+export async function onTermsAgree(termsData: any) {
+  return await axios.post("http://localhost:8000/api/terms", termsData);
+}
+
 export async function fetchProtectedInfo() {
   return await axios.get("http://localhost:8000/api/protected");
 }

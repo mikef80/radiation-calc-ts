@@ -15,7 +15,9 @@ const seed = ({ userData, calculationsData }) => {
             firstname VARCHAR NOT NULL,
             lastname VARCHAR NOT NULL,
             email VARCHAR PRIMARY KEY,
-            password VARCHAR NOT NULL
+            password VARCHAR NOT NULL,
+            terms VARCHAR NOT NULL,
+            termsagreed BOOLEAN NOT NULL
         );`);
 
       return Promise.all([usersTablePromise]);
@@ -39,7 +41,7 @@ const seed = ({ userData, calculationsData }) => {
     })
     .then(async () => {
       const mappedUserData = await userData.map(
-        async ({ firstname, lastname, email, password }) => {
+        async ({ firstname, lastname, email, password, terms, termsagreed }) => {
           const hashedPassword = await new Promise((resolve, reject) => {
             hash(password, 10, (err, hash) => {
               if (err) reject(err);
@@ -47,7 +49,7 @@ const seed = ({ userData, calculationsData }) => {
             });
           });
 
-          return { firstname, lastname, email, hashedPassword };
+          return { firstname, lastname, email, hashedPassword, terms, termsagreed };
         }
       );
 
@@ -55,13 +57,17 @@ const seed = ({ userData, calculationsData }) => {
     })
     .then((mappedUserData) => {
       const insertUsersQueryStr = format(
-        "INSERT INTO users (firstname, lastname, email, password) VALUES %L;",
-        mappedUserData.map(({ firstname, lastname, email, hashedPassword }) => [
-          firstname,
-          lastname,
-          email,
-          hashedPassword,
-        ])
+        "INSERT INTO users (firstname, lastname, email, password, terms, termsagreed) VALUES %L;",
+        mappedUserData.map(
+          ({ firstname, lastname, email, hashedPassword, terms, termsagreed }) => [
+            firstname,
+            lastname,
+            email,
+            hashedPassword,
+            terms,
+            termsagreed,
+          ]
+        )
       );
 
       const usersPromise = db.query(insertUsersQueryStr);

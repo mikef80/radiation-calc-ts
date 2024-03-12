@@ -18,7 +18,7 @@ export const loader = ({ request }: { request: Request }) => {
   const isAuth = localStorage.getItem("isAuth") === "true";
 
   if (isAuth) {
-    return redirect("/dashboard");
+    return redirect("/");
   }
 
   return new URL(request.url).searchParams.get("message");
@@ -59,7 +59,7 @@ const Login = (): JSX.Element => {
   const formSubmit = async (e: any) => {
     e.preventDefault();
 
-    const pathname = new URL(e.target.baseURI).searchParams.get("redirectTo") || "/dashboard";
+    const pathname = new URL(e.target.baseURI).searchParams.get("redirectTo") || "/";
     try {
       await onLogin({ email, password });
 

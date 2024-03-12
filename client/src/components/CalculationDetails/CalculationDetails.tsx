@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, ButtonGroup, ToggleButton } from "react-bootstrap";
-import { Form, useLocation, useNavigation, useSearchParams } from "react-router-dom";
+import { ButtonGroup, ToggleButton } from "react-bootstrap";
+import { Form, useLocation, useSearchParams } from "react-router-dom";
 import BackArrow from "../Images/BackArrow";
 
 export const loader = ({ request }: { request: Request }) => {
@@ -9,9 +9,7 @@ export const loader = ({ request }: { request: Request }) => {
 
 const CalculationDetails = () => {
   const { state } = useLocation();
-  console.log(state);
 
-  const navigation = useNavigation();
   const [searchParams] = useSearchParams();
   const calcType = searchParams.get("type");
   const [doserateRadioValue, setDoserateRadioValue] = useState("µSv/hr");
