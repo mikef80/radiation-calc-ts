@@ -1,8 +1,8 @@
+import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 import { Outlet } from "react-router-dom";
 
 const Root = () => {
-
   return (
     <>
       <NavBar />
@@ -11,6 +11,7 @@ const Root = () => {
         style={{ height: `100vh` }}>
         <Outlet />
       </div>
+      <Footer />
     </>
   );
 };
