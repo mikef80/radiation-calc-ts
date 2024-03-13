@@ -24,6 +24,8 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
     user = req.user;
   }
+  console.log('logged in');
+  
 
   loginUser(user)
     .then((token) => {
@@ -52,7 +54,6 @@ exports.getEndpoints = (req: Request, res: Response, next: NextFunction) => {
 };
 
 exports.agreeToTerms = (req: Request, res: Response, next: NextFunction) => {
-  console.log("here1");
   let user;
   if (req.user) {
     user = req.user;
