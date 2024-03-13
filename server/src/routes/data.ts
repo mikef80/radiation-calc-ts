@@ -6,6 +6,6 @@ const dataRouter = DataRouter();
 // data routes
 dataRouter.get("/calcs", userAuth, getCalcs);
 dataRouter.post("/calcs", userAuth, postCalc);
-dataRouter.get("/",  getEndpoints);
+dataRouter.get("/", getEndpoints);
 
 module.exports = dataRouter;
