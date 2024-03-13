@@ -13,8 +13,6 @@ if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
 const config = {};
 
 if (ENV === "production") {
-  console.log("IN PROD");
-
   // @ts-ignore
   config.connectionString = process.env.DATABASE_URL;
   // @ts-ignore
