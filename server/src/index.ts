@@ -12,8 +12,7 @@ require("./middlewares/passport-middleware");
 // initialised middlewares
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
-app.use(cors({ origin: "http://localhost*", credentials: true }));
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(passport2.initialize());
 // console.log(`The frontend app is running at ${process.env.CLIENT_URL}`);
 
