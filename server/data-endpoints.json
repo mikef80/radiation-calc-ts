@@ -1,0 +1,49 @@
+{
+  "GET /data/calcs": {
+    "description": "serves up an array of calculation objects for the currently authenticated user",
+    "queries": [],
+    "exampleRequest": {},
+    "exampleResponse": [
+      {
+        "calculation_id": 1,
+        "calculation_date_time": "2024-01-01 00:00:00.000+00",
+        "user_id": 1,
+        "calculation_type": "RDC",
+        "current_doserate": "1",
+        "current_distance": "1",
+        "new_operating_distance": "2",
+        "new_doserate": "0.25",
+        "calculation_unit": "µSv/hr",
+        "distance_unit": "metres"
+      }
+    ]
+  },
+  "POST /data/calcs": {
+    "description": "saves a new calculation to the database for the authenticated user",
+    "queries": [],
+    "exampleRequest": {
+      "calculation_date_time": "2024-03-11T00:00:00.000Z",
+      "calculation_type": "RDC",
+      "current_doserate": 1,
+      "current_distance": 1,
+      "new_operating_distance": 2,
+      "new_doserate": 0.25,
+      "calculation_unit": "µSv/hr",
+      "distance_unit": "metres"
+    },
+    "exampleResponse": {
+      "calculation": {
+        "calculation_id": 3,
+        "calculation_date_time": "2024-03-11T00:00:00.000Z",
+        "user_id": 1,
+        "calculation_type": "RDC",
+        "current_doserate": "1",
+        "current_distance": "1",
+        "new_operating_distance": "2",
+        "new_doserate": "0.25",
+        "calculation_unit": "µSv/hr",
+        "distance_unit": "metres"
+      }
+    }
+  }
+}
