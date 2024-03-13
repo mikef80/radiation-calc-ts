@@ -22,4 +22,5 @@ export async function onTermsAgree(termsData: any) {
 
 export async function fetchProtectedInfo() {
   return await axios.get(`${serverURL}/api/protected`);
+
 }
