@@ -13,10 +13,13 @@ if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
 const config = {};
 
 if (ENV === "production") {
+  console.log("IN PROD");
+
   config.connectionString = process.env.DATABASE_URL;
   config.max = 2;
 }
 
-console.log(config);
+// console.log(config);
+
 
 module.exports = new Pool(config);

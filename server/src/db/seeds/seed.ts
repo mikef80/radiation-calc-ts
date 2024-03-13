@@ -4,11 +4,13 @@ const { hash } = require("bcryptjs");
 
 const seed = ({ userData, calculationsData }) => {
   return db
-    .query(`DROP TABLE IF EXISTS calculations;`)
+    .query(`DROP TABLE IF EXISTS calculations CASCADE;`)
     .then(() => {
-      return db.query(`DROP TABLE IF EXISTS users;`);
+      return db.query(`DROP TABLE IF EXISTS users CASCADE;`);
     })
     .then(() => {
+      console.log("1");
+
       const usersTablePromise = db.query(`
           CREATE TABLE users (
             user_id SERIAL UNIQUE NOT NULL,
@@ -23,6 +25,7 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all([usersTablePromise]);
     })
     .then(() => {
+      console.log("2");
       const calculationsTablePromise = db.query(`
       CREATE TABLE calculations (
         calculation_id SERIAL PRIMARY KEY NOT NULL,
@@ -40,6 +43,7 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all([calculationsTablePromise]);
     })
     .then(async () => {
+      console.log("3");
       const mappedUserData = await userData.map(
         async ({ firstname, lastname, email, password, terms, termsagreed }) => {
           const hashedPassword = await new Promise((resolve, reject) => {
@@ -56,6 +60,7 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all(mappedUserData);
     })
     .then((mappedUserData) => {
+      console.log("4");
       const insertUsersQueryStr = format(
         "INSERT INTO users (firstname, lastname, email, password, terms, termsagreed) VALUES %L;",
         mappedUserData.map(
@@ -75,6 +80,7 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all([usersPromise]);
     })
     .then(() => {
+      console.log("5");
       const insertCalcQueryStr = format(
         "INSERT INTO calculations (calculation_date_time, user_id, calculation_type, current_doserate, current_distance, new_operating_distance, new_doserate, calculation_unit, distance_unit) VALUES %L;",
         calculationsData.map(
@@ -106,44 +112,6 @@ const seed = ({ userData, calculationsData }) => {
 
       return Promise.all([calcsPromise]);
     });
-
-  /* .then(async () => {
-      console.log("4");
-      const mappedUserData = await userData.map(async ({ firstname, lastname, email, password }) => {
-        const hashedPassword = await new Promise((resolve, reject) => {
-          hash(password, 10, (err, hash) => {
-            if (err) reject(err);
-            resolve(hash);
-          });
-        });
-
-        return [firstname, lastname, email, hashedPassword];
-      });
-
-      console.log(mappedUserData,'<--***');
-      
-
-      return Promise.all([mappedUserData]);
-    }) */
-  /* .then((mappedUserData) => {
-      console.log("5");
-      console.log(mappedUserData);
-
-      const insertUsersQueryStr = format(
-        "INSERT INTO users (firstname, lastname, email, password) VALUES %L;",
-        mappedUserData
-      );
-      const usersPromise = db.query(insertUsersQueryStr);
-
-      const insertCalculationsQueryStr = format(
-        "INSERT INTO calculations (user_id, calc_type, current_doserate, current_distance, new_operating_distance, new_doserate) VALUES %L;",
-        calculationsData
-      );
-
-      const calculationsPromise = db.query(insertCalculationsQueryStr);
-
-      return Promise.all([usersPromise, calculationsPromise]);
-    }); */
 };
 
 module.exports = seed;

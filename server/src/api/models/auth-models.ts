@@ -3,14 +3,14 @@ const { hash } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 
 exports.registerUser = async (user) => {
-  const { firstname, lastname, email, password } = user;
-  const sql = `INSERT INTO users (firstname, lastname, email, password) 
-    VALUES ($1, $2, $3, $4)
+  const { firstname, lastname, email, password, terms, termsagreed } = user;
+  const sql = `INSERT INTO users (firstname, lastname, email, password, terms, termsagreed) 
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING user_id, firstname, lastname, email`;
 
   const hashedPassword = await hash(password, 10);
   return db
-    .query(sql, [firstname, lastname, email, hashedPassword])
+    .query(sql, [firstname, lastname, email, hashedPassword, terms, termsagreed])
     .then(({ rowCount, rows }) => {
       if (!rowCount) {
         return Promise.reject({ status: 400, msg: "User not created" });
@@ -44,7 +44,6 @@ exports.updateUserTerms = async (user, body) => {
   console.log(user);
   const { termsagreed } = body;
   console.log(termsagreed);
-  
 
   return db
     .query(

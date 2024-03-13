@@ -23,11 +23,15 @@ describe("API Routes", () => {
             lastname: "Davis",
             email: "dave@davis.com",
             password: "123456789",
+            terms: "current terms",
+            termsagreed: false,
           })
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
           .expect(201)
           .then(({ body }: { body: any }) => {
+            console.log(body);
+
             expect(body.success).toBe(true);
             expect(body.msg).toBe("The registration was successful");
             expect(body.user_id).toBe(2);
@@ -198,7 +202,7 @@ describe("API Routes", () => {
     });
   });
 
-  describe.only("/api/terms", () => {
+  describe("/api/terms", () => {
     describe("POST", () => {
       it("POST:200 returns an object confirming consent to terms", () => {
         return request(testApp)

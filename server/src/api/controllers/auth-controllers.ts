@@ -4,13 +4,19 @@ const { registerUser, loginUser, updateUserTerms } = require("../models/auth-mod
 const endpoints = require("../../../endpoints.json");
 
 exports.register = async (req: Request, res: Response, next: NextFunction) => {
+  console.log("inhere");
+
   registerUser(req.body)
     .then((user_id) => {
       return res
         .status(201)
         .send({ success: true, msg: "The registration was successful", user_id });
     })
-    .catch(next);
+    .catch((err) => {
+      console.log(err);
+
+      next(err);
+    });
 };
 
 exports.login = async (req: Request, res: Response, next: NextFunction) => {
