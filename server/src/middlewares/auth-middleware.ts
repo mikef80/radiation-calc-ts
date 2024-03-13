@@ -20,5 +20,5 @@ const passportAuth = require("passport");
 
 
 exports.userAuth = (req: Request, res: Response, next: NextFunction) => {
-  passportAuth.authenticate("jwt", { session: true })(req, res, next);
+  passportAuth.authenticate("jwt", { session: false })(req, res, next);
 };

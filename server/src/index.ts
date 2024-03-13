@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 app.use(passport2.initialize());
+app.use(passport2.session());
 // console.log(`The frontend app is running at ${process.env.CLIENT_URL}`);
 
 // import routes
