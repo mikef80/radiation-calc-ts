@@ -6,16 +6,16 @@ const passport2 = require("passport");
 const cors = require("cors");
 const { handlePSQLErrors, handleCustomErrors, handleServerErrors } = require("./api/errors");
 
-// import passport mniddleware
-require("./middlewares/passport-middleware");
 
 // initialised middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(passport2.initialize());
-console.log(process.env.CLIENT_URL);
-
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(passport2.initialize());
+// console.log(`The frontend app is running at ${process.env.CLIENT_URL}`);
+
+// import passport middleware
+require("./middlewares/passport-middleware");
 
 // import routes
 const authRoutes = require("./routes/auth");
