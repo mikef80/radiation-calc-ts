@@ -1,25 +1,26 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
-const url = 'https://radiation-calc-ts.onrender.com'
-// const url = 'http://localhost:8000'
+// const serverURL = "http://localhost:8000";
+const serverURL = "https://radiation-calc-ts.onrender.com";
 
 export async function onRegistration(registrationData: any) {
-  return await axios.post(`${url}/api/register`, registrationData);
+  return await axios.post(`${serverURL}/api/register`, registrationData);
 }
 
 export async function onLogin(loginData: any) {
-  return await axios.post(`${url}/api/login`, loginData);
+  return await axios.post(`${serverURL}/api/login`, loginData);
 }
 
 export async function onLogout() {
-  return await axios.get(`${url}/api/logout`);
+  return await axios.get(`${serverURL}/api/logout`);
 }
 
 export async function onTermsAgree(termsData: any) {
-  return await axios.post(`${url}/api/terms`, termsData);
+  return await axios.post(`${serverURL}/api/terms`, termsData);
 }
 
 export async function fetchProtectedInfo() {
-  return await axios.get(`${url}/api/protected`);
+  return await axios.get(`${serverURL}/api/protected`);
+
 }

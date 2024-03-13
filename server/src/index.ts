@@ -6,7 +6,7 @@ const passport2 = require("passport");
 const cors = require("cors");
 const { handlePSQLErrors, handleCustomErrors, handleServerErrors } = require("./api/errors");
 
-// import passport mniddleware
+// import passport middleware
 require("./middlewares/passport-middleware");
 
 // initialised middlewares

@@ -61,6 +61,8 @@ const CalculationInput = () => {
             calculation: { calculation_id },
           },
         } = await postCalculation(newCalc);
+        console.log(calculation_id, '<==calcid');
+        
         newCalc.calculation_id = calculation_id;
         navigate(`/calculations/${calculation_id}`, { state: newCalc });
       } catch (error: any) {
