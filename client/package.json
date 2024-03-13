@@ -9,9 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
-  "homepage": "http://mikef80.github.io/radiation-calc-ts",
+  "homepage": "http://mikef80.github.io/radiation-calc-ts/client",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "@types/react-router-bootstrap": "^0.26.6",
