@@ -1,7 +1,7 @@
 const { sign } = require("jsonwebtoken");
 import { Request, Response, NextFunction } from "express";
 const { registerUser, loginUser, updateUserTerms } = require("../models/auth-models");
-const endpoints = require("../../../endpoints.json");
+const endpoints = require("../../../api-endpoints.json");
 
 exports.register = async (req: Request, res: Response, next: NextFunction) => {
   console.log("inhere");
