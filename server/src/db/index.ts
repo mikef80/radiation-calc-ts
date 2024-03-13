@@ -15,11 +15,12 @@ const config = {};
 if (ENV === "production") {
   console.log("IN PROD");
 
+  // @ts-ignore
   config.connectionString = process.env.DATABASE_URL;
+  // @ts-ignore
   config.max = 2;
 }
 
 // console.log(config);
-
 
 module.exports = new Pool(config);
