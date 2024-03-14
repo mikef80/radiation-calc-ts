@@ -21,6 +21,8 @@ const Signup = (): JSX.Element => {
     lastname: "",
     email: "",
     password: "",
+    terms: "new terms",
+    termsagreed: false,
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -51,6 +53,8 @@ const Signup = (): JSX.Element => {
         lastname: "",
         email: "",
         password: "",
+        terms: "new terms",
+        termsagreed: false,
       });
       setConfirmPassword("");
       setTimeout(() => {
