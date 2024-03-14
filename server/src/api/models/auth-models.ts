@@ -53,7 +53,7 @@ exports.updateUserTerms = async (user, body) => {
   WHERE user_id = $3
   RETURNING *
   `,
-      ["testTerms", true, user.id]
+      ["terms have been agreed! This should be true =>", true, user.id]
     )
     .then(({ rows }) => {
       return rows[0].termsagreed;
