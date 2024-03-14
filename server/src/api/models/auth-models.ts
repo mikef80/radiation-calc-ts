@@ -41,9 +41,7 @@ exports.checkUserExists = async (user) => {
 };
 
 exports.updateUserTerms = async (user, body) => {
-  console.log(user);
   const { termsagreed } = body;
-  console.log(termsagreed);
 
   return db
     .query(
@@ -53,7 +51,11 @@ exports.updateUserTerms = async (user, body) => {
   WHERE user_id = $3
   RETURNING *
   `,
-      ["terms have been agreed! This should be true =>", true, user.id]
+      [
+        "All calculations should be verified independently and signed off.\nPlease ensure your calculations are recorded officially i.e in your Incident log book.\nData may be removed periodically due to the ongoing development process.\nI agree to all of these terms and conditions.",
+        termsagreed,
+        user.id,
+      ]
     )
     .then(({ rows }) => {
       return rows[0].termsagreed;

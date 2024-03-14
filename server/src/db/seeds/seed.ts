@@ -9,8 +9,6 @@ const seed = ({ userData, calculationsData }) => {
       return db.query(`DROP TABLE IF EXISTS users CASCADE;`);
     })
     .then(() => {
-      console.log("1");
-
       const usersTablePromise = db.query(`
           CREATE TABLE users (
             user_id SERIAL UNIQUE NOT NULL,
@@ -25,7 +23,6 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all([usersTablePromise]);
     })
     .then(() => {
-      console.log("2");
       const calculationsTablePromise = db.query(`
       CREATE TABLE calculations (
         calculation_id SERIAL PRIMARY KEY NOT NULL,
@@ -43,7 +40,6 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all([calculationsTablePromise]);
     })
     .then(async () => {
-      console.log("3");
       const mappedUserData = await userData.map(
         async ({ firstname, lastname, email, password, terms, termsagreed }) => {
           const hashedPassword = await new Promise((resolve, reject) => {
@@ -60,7 +56,6 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all(mappedUserData);
     })
     .then((mappedUserData) => {
-      console.log("4");
       const insertUsersQueryStr = format(
         "INSERT INTO users (firstname, lastname, email, password, terms, termsagreed) VALUES %L;",
         mappedUserData.map(
@@ -80,7 +75,6 @@ const seed = ({ userData, calculationsData }) => {
       return Promise.all([usersPromise]);
     })
     .then(() => {
-      console.log("5");
       const insertCalcQueryStr = format(
         "INSERT INTO calculations (calculation_date_time, user_id, calculation_type, current_doserate, current_distance, new_operating_distance, new_doserate, calculation_unit, distance_unit) VALUES %L;",
         calculationsData.map(
