@@ -1,8 +1,9 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
+const serverURL = import.meta.env.VITE_SERVER_URL;
 // const serverURL = "http://localhost:8000";
-const serverURL = "https://radiation-calc-ts.onrender.com";
+// const serverURL = "https://radiation-calc-ts.onrender.com";
 
 export async function onRegistration(registrationData: any) {
   return await axios.post(`${serverURL}/api/register`, registrationData);
