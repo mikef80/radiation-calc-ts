@@ -24,27 +24,6 @@ export const loader = ({ request }: { request: Request }) => {
   return new URL(request.url).searchParams.get("message");
 };
 
-/* export const action = async ({ request }: { request: Request }) => {
-  console.log(request);
-
-  const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const pathname = new URL(request.url).searchParams.get("redirectTo") || "/dashboard";
-  // const dispatch = useDispatch(); 
-
-  try {
-    await onLogin({ email, password });
-    // dispatch(authenticateUser());
-    localStorage.setItem("isAuth", "true");
-    return redirect(pathname);
-  } catch (error: any) {
-    console.log(error);
-
-    return "Couldn't log user in";
-  }
-}; */
-
 const Login = (): JSX.Element => {
   let loginMsg: any = useLoaderData();
   const errorMessage: any = useActionData();

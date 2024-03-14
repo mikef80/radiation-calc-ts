@@ -3,7 +3,6 @@ const {
   register,
   login,
   logout,
-  restricted,
   getEndpoints,
   agreeToTerms,
 } = require("../api/controllers/auth-controllers");
@@ -21,6 +20,5 @@ authRouter.get("/logout", logout);
 authRouter.get("/", getEndpoints);
 
 authRouter.post("/terms", userAuth, agreeToTerms);
-// authRouter.get("/restricted", userAuth, restricted);
 
 module.exports = authRouter;

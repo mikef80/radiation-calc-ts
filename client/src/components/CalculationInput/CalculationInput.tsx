@@ -52,8 +52,6 @@ const CalculationInput = () => {
         newCalc.current_doserate *
         Math.pow(+newCalc.current_distance / +newCalc.new_operating_distance, 2)
       ).toFixed(2);
-      // (document.getElementById("new_doserate") as HTMLInputElement).value =
-      //  new_doserate.toString();
 
       try {
         const {
@@ -61,8 +59,7 @@ const CalculationInput = () => {
             calculation: { calculation_id },
           },
         } = await postCalculation(newCalc);
-        console.log(calculation_id, '<==calcid');
-        
+
         newCalc.calculation_id = calculation_id;
         navigate(`/calculations/${calculation_id}`, { state: newCalc });
       } catch (error: any) {

@@ -23,16 +23,15 @@ const Warning = () => {
       <Modal.Body>
         This app is for demonstration purposes only.
         <br />
-        <br />
-        All calculations should be verified independently.
-        <br />
+        <ul>
+          <li>All calculations should be verified independently and signed off.</li>
+          <li>Please ensure your calculations are recorded officially i.e in your Incident log book.</li>
+          <li>Data may be removed periodically due to the ongoing development process.</li>
+        </ul>
         <br />
         Click 'Agree' to agree to these terms and continue.
       </Modal.Body>
       <Modal.Footer>
-        {/* <Button variant='secondary' onClick={handleClose}>
-          Close
-        </Button> */}
         <Button variant='primary' onClick={handleAgree}>
           Agree
         </Button>
