@@ -1,8 +1,12 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
+import Cookies from "js-cookie";
 
 // const serverURL = "http://localhost:8000";
 const serverURL = "https://radiation-calc-ts.onrender.com";
+
+const jwtToken = Cookies.get("token");
+console.log(jwtToken);
 
 export async function onRegistration(registrationData: any) {
   return await axios.post(`${serverURL}/api/register`, registrationData);
