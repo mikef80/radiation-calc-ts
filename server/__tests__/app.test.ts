@@ -7,7 +7,8 @@ const testDb = require("../src/db/index.ts");
 const testSeed = require("../src/db/seeds/seed.ts");
 const { userAuth } = require("../src/middlewares/auth-middleware");
 const calculationsTestData = require("../src/db/data/test-data/calculations");
-const endpoints = require("../endpoints.json");
+const api_endpoints = require("../api-endpoints.json");
+const data_endpoints = require("../data-endpoints.json");
 
 beforeEach(() => testSeed({ userData, calculationsData }));
 afterAll(() => testDb.end());
@@ -30,8 +31,6 @@ describe("API Routes", () => {
           .expect("Content-Type", /json/)
           .expect(201)
           .then(({ body }: { body: any }) => {
-            console.log(body);
-
             expect(body.success).toBe(true);
             expect(body.msg).toBe("The registration was successful");
             expect(body.user_id).toBe(2);
@@ -196,7 +195,7 @@ describe("API Routes", () => {
           .get("/api")
           .expect(200)
           .then(({ body }) => {
-            expect(body.endpoints).toEqual(endpoints);
+            expect(body.endpoints).toEqual(api_endpoints);
           });
       });
     });
@@ -380,6 +379,19 @@ describe("DATA routes", () => {
                 const { msg } = JSON.parse(text);
                 expect(msg).toBe("Bad request");
               });
+          });
+      });
+    });
+  });
+
+  describe("/data", () => {
+    describe("GET", () => {
+      it("GET:200 returns an object detailing available endpoints", () => {
+        return request(testApp)
+          .get("/data")
+          .expect(200)
+          .then(({ body }) => {
+            expect(body.endpoints).toEqual(data_endpoints);
           });
       });
     });
