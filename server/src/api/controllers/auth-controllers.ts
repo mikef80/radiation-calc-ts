@@ -30,7 +30,7 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
     .then((token) => {
       return res
         .status(200)
-        .cookie("token", token, { httpOnly: false })
+        .cookie("token", token, { httpOnly: false, secure: true, sameSite: "none" })
         .send({ success: true, message: "Logged in successfully" });
     })
     .catch(next);

@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 const passportAuth = require("passport");
 
 exports.userAuth = (req: Request, res: Response, next: NextFunction) => {
-  passportAuth.authenticate("jwt", { session: false, secure: true, sameSite: "None" })(
+  passportAuth.authenticate("jwt", { session: false })(
     req,
     res,
     next
@@ -11,3 +11,4 @@ exports.userAuth = (req: Request, res: Response, next: NextFunction) => {
 };
 
 // PICK IT UP HERE - USER DETAILS NOT BEING PASSED WITH REQUESTS
+// **SAME SITE NEEDS TO BE FALSE!**
