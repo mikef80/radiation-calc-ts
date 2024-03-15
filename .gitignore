@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 *.env.*
 todo.MD
+# Local Netlify folder
+.netlify

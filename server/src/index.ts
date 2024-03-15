@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const passport2 = require("passport");
 const cors = require("cors");
 const { handlePSQLErrors, handleCustomErrors, handleServerErrors } = require("./api/errors");
+import serverless from "serverless-http";
 
 // import passport middleware
 require("./middlewares/passport-middleware");
@@ -29,4 +30,5 @@ app.use(handleCustomErrors);
 app.use(handlePSQLErrors);
 app.use(handleServerErrors);
 
-module.exports = app;
+// module.exports = app;
+export const handler = serverless(app);
