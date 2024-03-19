@@ -29,5 +29,4 @@ app.use(handleCustomErrors);
 app.use(handlePSQLErrors);
 app.use(handleServerErrors);
 
-// module.exports = app;
-export const handler = serverless(app);
+module.exports = app;
